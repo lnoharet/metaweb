@@ -1,0 +1,128 @@
+@font-face {
+  font-family: 'Minecrafter';
+  src: url("../resources/Minecrafter.Reg.ttf");
+}
+
+body {
+  background-color: grey;
+}
+
+h1, h2{
+  font-family: 'Minecrafter';
+  color: white;
+}
+
+h1{font-size: 45px;}
+
+h2{font-size: 14px;}
+
+ul{color: white;}
+
+
+.sidebar-comp{
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  width: 400px;
+  height: 100vh;
+  margin-left: -40px;
+  margin-top: -20px;
+}
+
+.h2-sidebar {
+  margin-top: 40px;
+  font-size: 28px;
+  align-self: center;
+}
+
+.head-group {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.h2-players {
+  margin-left: 10px;
+}
+
+.p-players {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 100;
+  margin-left: 10px;
+  font-size: 12px;
+
+}
+
+.img-head {
+  height: 48px;
+}
+
+.hr-sidebar {
+  border-top: 2px solid #3D3B3B;
+  width: 80%;
+  align-self: center;
+}
+
+.player-list-container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  width: 300px;
+  height: 250px;
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+  }
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px 10px black;
+  border: solid 3px transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 10px 10px #C4C4C4;
+  border: solid 3px transparent;
+  border-radius: 10px;
+}
+
+.player-container {
+  height: 40px;
+  margin-bottom: 10px;
+  margin-left: -40px;
+  background-color: #292929;
+  list-style-type: none;
+  font-family: 'Montserrat', sans-serif;
+
+}
+
+.player-container:hover {
+  background-color: #B2085C;
+  cursor: pointer;
+}
+
+.online-players{
+  padding: 15px;
+  font-size: 14px;
+  color: white;
+  font-family: 'Minecrafter';
+}
+.offline-players {
+  padding: 15px;
+  font-size: 14px;
+  color: #827E7E;
+  font-family: 'Minecrafter';
+}
+.online-status {
+  color: white;
+  font-family: 'Montserrat';
+  margin-top: -20px;
+  font-size: 10px;
+  text-align: right;
+}
