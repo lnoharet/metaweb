@@ -1,66 +1,41 @@
-// set the dimensions and margins of the graph
-var margin = { top: 30, right: 30, bottom: 70, left: 60 },
-    width = 300
-height = 300
+const data = [40, 39, 90, 100, 20];
 
-// append the svg object to the body of the page
-var svg = d3.select("#my_dataviz")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
+const w = 300;
+const h = 300;
+const svg = d3.select('#d3-container')
+    .append('svg')
+    .attr('width', w)
+    .attr('height', h)
+    .style('overflow', 'visible')
+    .style('padding-top', '40px')
+    .style('margin-left', '60px')
 
-// Initialize the X axis
-var x = d3.scaleBand()
-    .range([0, width])
-    .padding(0.2);
-var xAxis = svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
+    const xScale = d3.scaleBand()
+        .domain(data.map((val, i) => i))
+        .range([0,w])
+        .padding(0.1);
+        
+    const yScale = d3.scaleLinear()
+        .domain([0,h])
+        .range([h, 0]);
 
-// Initialize the Y axis
-var y = d3.scaleLinear()
-    .range([height, 0]);
-var yAxis = svg.append("g")
-    .attr("class", "myYaxis")
+const xAxis = d3.axisBottom(xScale)
+    .ticks(data.length);
+    
+const yAxis = d3.axisLeft(yScale)
+    .ticks(7);
+    
+svg.append('g')
+    .call(xAxis)
+    .attr('transform', `translate(0, ${h})`)
+svg.append('g')
+    .call(yAxis);
 
-
-// A function that create / update the plot for a given variable:
-function update(selectedVar) {
-
-    // Parse the Data
-    d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/barplot_change_data.csv", function (data) {
-
-        // X axis
-        x.domain(data.map(function (d) { return d.group; }))
-        xAxis.transition().duration(1000).call(d3.axisBottom(x))
-
-        // Add Y axis
-        y.domain([0, d3.max(data, function (d) { return +d[selectedVar] })]);
-        yAxis.transition().duration(1000).call(d3.axisLeft(y));
-
-        // variable u: map data to existing bars
-        var u = svg.selectAll("rect")
-            .data(data)
-
-        // update bars
-        u
-            .enter()
-            .append("rect")
-            .merge(u)
-            .transition()
-            .duration(1000)
-            .attr("x", function (d) { return x(d.group); })
-            .attr("y", function (d) { return y(d[selectedVar]); })
-            .attr("width", x.bandwidth())
-            .attr("height", function (d) { return height - y(d[selectedVar]); })
-            .attr("fill", "#69b3a2")
-    })
-
-}
-
-// Initialize plot
-update('var1')
-
-export default update();
+svg.selectAll('.bar')
+    .data(data)
+    .join('rect')
+        .attr('x', (v, i) => xScale(i))
+        .attr('y', yScale)
+        .attr('width', xScale.bandwidth())
+        .attr('height', val => h - yScale(val))
+        .style('fill', '#B2085C');

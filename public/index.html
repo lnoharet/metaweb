@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
     <title>METAweb</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 
 <body style="margin:0">
@@ -43,19 +44,13 @@
                     </div>
                 </div>
                 <div>
-
-                    <button onclick="update('var1')">Variable 1</button>
-                    <button onclick="update('var2')">Variable 2</button>
-                    <div id="my_dataviz">
-
-                    </div>
+                    <div id="d3-container"></div>
                 </div>
             </div>
 
         </ul>
     </div>
-    <script></script>
-    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="chart.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io();
