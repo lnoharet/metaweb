@@ -4,11 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="basic_style.css">
     <title>METAweb</title>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 
 <body style="margin:0">
@@ -20,7 +17,6 @@
                 <div class="hr-sidebar"></div>
 
                 <div class="head-group">
-                    <img class="img-head" src="head.png"></img>
                     <h2 class="h2-players">Players</h2>
                 </div>
 
@@ -32,8 +28,8 @@
 
                 <div class="sidebar-chart">
                     <div class="stat_select_dropdown" id="stat_select_btn">
-                        <select onChange=selectChange(this.value) value="0">
-                            <option value="0" hidden>Select stat:</option>
+                        <select onChange=selectChange(this.value)>
+                            <option value="0">Select stat:</option>
                             <option value="1">Mob Kills</option>
                             <option value="2">Player Kills</option>
                             <option value="3">Deaths</option>
@@ -44,13 +40,12 @@
                     </div>
                 </div>
                 <div>
-                    <div id="d3-container"></div>
                 </div>
             </div>
 
         </ul>
     </div>
-    <script src="chart.js"></script>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io();
@@ -60,7 +55,7 @@
         var current_stat;
 
         // Create User buttons
-        /* 
+        /*
         1. Get user names into an array
         2. Create buttons with the value same as username
         3. AddEventListener on "click" to set as a global variable the buttons value/username
@@ -72,17 +67,15 @@
             users = arg;
 
             for (let i = 0; i < users.length; i++) {
-                var playerContainer = document.createElement("li");
-                var playerName = document.createElement("div")
-                playerContainer.className = "player-container";
-                playerContainer.id = users[i].uuid;
-                playerContainer.value = users[i].name;
-                playerName.innerHTML = users[i].name;
-                playerName.className = "player-name";
-                var parentDiv = document.getElementById("player-list");
-                parentDiv.appendChild(playerContainer);
-                playerContainer.appendChild(playerName);
-                playerContainer.addEventListener("click", function () {
+                var user_button = document.createElement("div");
+                // Lägg till en classname på varje button
+                user_button.innerHTML = users[i].name;
+                user_button.id = users[i].uuid;
+                user_button.value = users[i].name;
+                user_button.className = "player-container";
+                var div = document.getElementById("player-list");
+                div.appendChild(user_button);
+                user_button.addEventListener("click", function () {
                     window.current_user = this.id;
                     console.log("set current user to ".concat(window.current_user));
                 });
@@ -91,24 +84,9 @@
 
         /*------------------------------------------------------------------------------------------------*/
         // Socket communication
-        /*var buttons = document.getElementsByClassName("player");
-  
-        for (var i = 0; i < buttons.length; i++) {
-          var button = buttons[i];
-          button.addEventListener("click", function (event) {
-            var elem = event.target;
-            var data = { id: elem.id };
-            // Emit event with data
-            socket.emit('clicked', data);
-            alert('booton');
-            console.log("Emitting clicked data", data);
-            });
-        } */
 
-        socket.on('response', function (arg) {
-            var res = "Survival time ";
-            console.log('response');
-            document.write(res.concat(arg));
+        socket.on('get_stat_response', function (arg) {
+            console.log(arg.result);
         });
 
         /*------------------------------------------------------------------------------------------------*/
