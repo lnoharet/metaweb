@@ -73,6 +73,7 @@
             for (let i = 0; i < users.length; i++) {
                 var playerContainer = document.createElement("li");
                 var playerName = document.createElement("div");
+
                 playerContainer.className = "player-container";
                 playerContainer.id = users[i].uuid;
                 playerContainer.value = users[i].name;
@@ -96,7 +97,7 @@
                         this.className = "player-container";
                         window.current_user = null;
                     }
-                    //change(playerContainer);
+
                 });
             }
         });
@@ -119,8 +120,7 @@
             }
         }
         function change(playerbox) {
-            var color = document.getElementsByClassName(playerbox);
-            color.className = "player-container-selected";
+            playerbox = "player-container-selected";
         }
     </script>
 
