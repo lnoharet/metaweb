@@ -60,9 +60,6 @@ io.on("connection", (socket) => {
     });
   });
 
-
-
-
   socket.on("get_stat", function(arg){
     var userid = arg.user;
     var stat = arg.stat;
