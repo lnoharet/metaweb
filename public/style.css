@@ -35,6 +35,10 @@ ul{color: white;}
   align-self: center;
 }
 
+.h2-chartText {
+  margin-left: 10px;
+}
+
 .head-group {
   display: flex;
   flex-direction: row;

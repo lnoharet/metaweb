@@ -141,7 +141,6 @@ io.on("connection", (socket) => {
             // adds session_lengths to an array. each session_length is [seconds, minutes, hours] format.
             result[i] = session_length;
           }
-
           io.sockets.emit("get_stat_response", {result, stat});
         });
         break;
