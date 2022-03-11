@@ -17,8 +17,26 @@ h1{font-size: 45px;}
 
 h2{font-size: 14px;}
 
-ul{color: white;}
+ul{
+    color: white;
+    padding-inline-start: 0;
+    }
 
+#about{
+    float: right;
+    height: 40px;
+    margin-top: 10px;
+    background-color: #292929;
+    list-style-type: none;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    padding: 7px;
+}
+#about:hover {
+    background-color: #B2085C;
+    transform: translateY(-2px);
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+}
 
 .sidebar-comp{
   display: flex;
