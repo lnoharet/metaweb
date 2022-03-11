@@ -67,15 +67,17 @@
             users = arg;
 
             for (let i = 0; i < users.length; i++) {
-                var user_button = document.createElement("div");
-                // Lägg till en classname på varje button
-                user_button.innerHTML = users[i].name;
-                user_button.id = users[i].uuid;
-                user_button.value = users[i].name;
-                user_button.className = "player-container";
-                var div = document.getElementById("player-list");
-                div.appendChild(user_button);
-                user_button.addEventListener("click", function () {
+                var playerContainer = document.createElement("li");
+                var playerName = document.createElement("div");
+                playerContainer.className = "player-container";
+                playerContainer.id = users[i].uuid;
+                playerContainer.value = users[i].name;
+                playerName.innerHTML = users[i].name;
+                playerName.className = "player-name";
+                var parentDiv = document.getElementById("player-list");
+                parentDiv.appendChild(playerContainer);
+                playerContainer.appendChild(playerName);
+                playerName.addEventListener("click", function () {
                     window.current_user = this.id;
                     change(playerContainer);
                     playerContainer.className = "player-container-selected";
