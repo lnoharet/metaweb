@@ -10,6 +10,7 @@ body {
 h1, h2{
   font-family: 'Minecrafter';
   color: white;
+  letter-spacing: 0.1em;
 }
 
 h1{font-size: 45px;}
@@ -44,7 +45,6 @@ ul{color: white;}
   flex-direction: row;
   align-items: flex-end;
   margin-left: 20px;
-  margin-top: 10px;
   margin-bottom: 20px;
 }
 
@@ -68,6 +68,7 @@ ul{color: white;}
   border-top: 2px solid #3D3B3B;
   width: 80%;
   align-self: center;
+  margin: 5px;
 }
 
 .player-list-container {
@@ -102,6 +103,7 @@ ul{color: white;}
   background-color: #292929;
   list-style-type: none;
   font-family: 'Montserrat', sans-serif;
+  padding: 7px;
 
 }
 
@@ -116,6 +118,7 @@ ul{color: white;}
   background-color: #B2085C;
   list-style-type: none;
   font-family: 'Montserrat', sans-serif;
+  padding: 7px;
 
 }
 

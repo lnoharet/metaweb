@@ -2,8 +2,9 @@ function renderChart(data) {
   //const data = filtered_data; //[40, 39, 90, 100, 20];
   d3.select("svg").remove();
   console.log(data);
-  data_max = Math.max(...data);
-
+  const isAllZero = data.every(item => item === 0);
+  isAllZero ? data_max = 10 : data_max = Math.max(...data);
+  
   const w = 300;
   const h = 300;
   const svg = d3
