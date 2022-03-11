@@ -1,0 +1,105 @@
+@font-face {
+    font-family: 'Minecrafter';
+    src: url("Minecrafter.Reg.ttf");
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+.home-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    position: absolute;
+    right: 40px
+  
+}
+
+.home-btn:hover {
+    color: #B2085C;
+    transform: translateY(-2px);
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+}
+
+.headline {
+    font-family: 'Minecrafter';
+    font-size: 28px;
+    color: white;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container-about {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    align-items: left;
+}
+
+.text-boxes {
+    display: flex;
+    flex-direction: row;
+}
+
+.text-container {
+    margin-left: 40px;
+    margin-top: 40px;
+    margin-right: 40px;
+    width: 40%;
+}
+
+p {
+    font-size: 12px;
+}
+
+.container-profiles {
+    display: flex;
+    position:absolute;
+    bottom: 40px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
+    height: 300px;
+    background-color: #292929;
+    border-radius: 0px;
+    padding: 10px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.h2-profile {
+    font-size: 18px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+
+.p-profile {
+    font-size: 14px;
+    margin-top: 8px;
+    color: #B2085C;
+}
+
+.img-about {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    object-position: 0% 0%;
+    border-radius: 100px;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, .3);
+}
