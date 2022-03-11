@@ -56,7 +56,7 @@
         var socket = io();
         socket.emit('get_users');
 
-        var current_user;
+        window.current_user = null;
         var current_stat;
 
         // Create User buttons
@@ -70,10 +70,10 @@
         socket.on('get_users_response', function (arg) {
             console.log('get_users_response');
             users = arg;
-
             for (let i = 0; i < users.length; i++) {
                 var playerContainer = document.createElement("li");
-                var playerName = document.createElement("div")
+                var playerName = document.createElement("div");
+
                 playerContainer.className = "player-container";
                 playerContainer.id = users[i].uuid;
                 playerContainer.value = users[i].name;
@@ -83,10 +83,21 @@
                 parentDiv.appendChild(playerContainer);
                 playerContainer.appendChild(playerName);
                 playerContainer.addEventListener("click", function () {
-                    window.current_user = this.id;
-                    change(this.className);
-                    this.className = "player-container-selected";
-                    console.log("set current user to ".concat(window.current_user));
+                    if (this.id != window.current_user){
+                        if(window.current_user != null){
+                            var last_player = document.getElementById(window.current_user);
+                            last_player.className = "player-container";
+                        }
+                        window.current_user = this.id;
+                        this.className = "player-container-selected";
+
+                        console.log("set current user to ".concat(window.current_user));
+                    }
+                    else{
+                        this.className = "player-container";
+                        window.current_user = null;
+                    }
+
                 });
             }
         });
