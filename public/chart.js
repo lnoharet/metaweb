@@ -1,4 +1,21 @@
 function renderChart(data) {
+
+  function unix_to_s_m_h( time ) {
+    var diff = Math.floor(time / 1000), units = [
+      { d: 60, l: "seconds" },
+      { d: 60, l: "minutes" },
+      { d: 24, l: "hours" }
+      ];
+    var s = [];
+    for (var i = 0; i < units.length; ++i) {
+      s[i] =  (diff % units[i].d);
+      diff = Math.floor(diff / units[i].d);
+    }
+    console.log(s)
+    return s;
+  }
+
+  
   //const data = filtered_data; //[40, 39, 90, 100, 20];
   d3.select("svg").remove();
   console.log(data);

@@ -8,6 +8,54 @@ body {
   height: 100%;
 }
 
+.navbar {
+  display: flex;
+  flex-direction: row;
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-bottom: 20px;
+  background-color: black;
+  color: white;
+}
+
+.home-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: white;
+  text-decoration: none;
+  position: absolute;
+  right: 40px;
+
+}
+
+.demo-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: white;
+  text-decoration: none;
+  position: absolute;
+  right: 150px;
+}
+
+.home-btn:hover {
+  color: #B2085C;
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+}
+
+.demo-btn:hover {
+  color: #B2085C;
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+}
+
+.headline {
+  font-family: 'Minecrafter';
+  font-size: 28px;
+  color: white;
+  letter-spacing: 0.1em;
+}
+
 h1, h2{
   font-family: 'Minecrafter';
   color: white;
@@ -51,7 +99,7 @@ ul{
   background-color: black;
   width: 400px;
   height: 100vh;
-  margin-left: -40px;
+  margin-left: 0px;
   margin-top: -20px;
 }
 
