@@ -5,6 +5,7 @@
 
 body {
   background-color: grey;
+  height: 100%;
 }
 
 h1, h2{
@@ -16,6 +17,11 @@ h1, h2{
 h1{font-size: 45px;}
 
 h2{font-size: 14px;}
+
+a {
+    all: unset;
+    cursor: pointer;
+}
 
 ul{
     color: white;
@@ -36,6 +42,7 @@ ul{
     background-color: #B2085C;
     transform: translateY(-2px);
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+    cursor: pointer;
 }
 
 .sidebar-comp{
@@ -171,6 +178,7 @@ select {
   margin-right: 10px;
   margin-top: 10px;
   outline: 0;
+  cursor: pointer;
 }
 
 .select::-ms-expand{
