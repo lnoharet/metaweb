@@ -7,11 +7,59 @@ var current_stat;
 //var filtered_data = [];
 
 var users; // list of all users
+
+
 // TODO: Add info about if the user is online or not and last seen online.
+
+
 socket.on("get_users_response", function (arg) {
   console.log("get_users_response");
   users = arg;
+
+  users.sort((a, b) => (a.name > b.name) ? 1 : -1);
+
+  displayFriendsList(users);
+
+  var players = [];
   for (let i = 0; i < users.length; i++) {
+    players.push(users[i].name);
+  }
+  //console.log(players);
+  const searchBar = document.getElementById("searchBar");
+  searchBar.addEventListener('keyup', (e) => {
+    const searchString = e.target.value.toLowerCase();
+
+    const filteredPlayers = players.filter(player => {
+      return player.toLowerCase().includes(searchString);
+    });
+
+    const filtered_users = users.filter(user => { return user.name.toLowerCase().includes(searchString) })
+    //console.log(filtered_users);
+
+    if (filtered_users.length == 0 && searchString == "") {
+      displayFriendsList(users);
+    }
+    else if (filtered_users.length == 0) {
+      displayFriendsList(filtered_users);
+    }
+    else {
+      displayFriendsList(filtered_users);
+    }
+
+  })
+})
+
+function displayFriendsList(users) {
+
+  if (document.getElementsByClassName("player-container")) {
+    const elements = document.getElementsByClassName("player-container");
+    while (elements.length > 0) {
+      elements[0].parentNode.removeChild(elements[0]);
+    }
+  }
+  for (let i = 0; i < users.length; i++) {
+
+
     var playerContainer = document.createElement("li");
     var playerName = document.createElement("div");
 
@@ -44,7 +92,8 @@ socket.on("get_users_response", function (arg) {
       }
     });
   }
-});
+}
+
 /*------------------------------------------------------------------------------------------------*/
 // Socket communication
 
