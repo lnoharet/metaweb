@@ -61,7 +61,9 @@ socket.on("get_stat_response", function (arg) {
       break;
     case "2":
       // Player Kills
-      //renderChart(group_into_dates(data, 7, kills));
+      renderChart(group_into_dates(data, 7, "kills"));
+      //console.log(stat);
+      // Lisa
       break;
 
     case "3":
@@ -72,10 +74,15 @@ socket.on("get_stat_response", function (arg) {
 
     case "4":
       // Time played
+      // Lisa
+      console.log(stat);
+      renderChart(timePlayed(data, 7));
       break;
 
     case "5":
       // Amount of sessions played
+      renderChart(group_into_dates(data, 7, "session_end"));
+      //console.log(group_into_dates());
       break;
 
     case "6":

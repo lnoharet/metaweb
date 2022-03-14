@@ -108,7 +108,7 @@ io.on("connection", (socket) => {
           if (err) throw err;
 
           // Calculate total time played
-
+          var result = res;
 
           io.sockets.emit("get_stat_response", {result, stat});
         });
