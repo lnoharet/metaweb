@@ -30,11 +30,15 @@ function sessionsPlayed(data, days){
     var today = Date.now();
     var numberOfSessions = [];
     for (let i = 0; i < days; i++) {
-        stats[i] = 0;
+        numberOfSessions[i] = 0;
     }
     for (let i = 0; i < filtered.length; i++) {
-        
+        var session = filtered[i].session_end;
+        var index = Math.floor((today - session)/ (1000*60*60*24));
+        numberOfSessions[days-1-index] += 1;
+        console.log("index: " + index); 
     }
+    return numberOfSessions;
 }
 
 function dateStamps(days){  // date stamps for x-axis on chart

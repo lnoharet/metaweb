@@ -81,7 +81,7 @@ socket.on("get_stat_response", function (arg) {
 
     case "5":
       // Amount of sessions played
-      renderChart(group_into_dates(data, 7, "session_end"), "Amount of sessions", dateStamps(7));
+      renderChart(sessionsPlayed(data, 7), "Amount of sessions", dateStamps(7));
       //console.log(group_into_dates());
       break;
 
