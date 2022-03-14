@@ -25,6 +25,18 @@ function group_into_dates(data, days, stat_type) {
     return stats.reverse();
 }
 
+function sessionsPlayed(data, days){
+    filtered = filter_data_by_days(data);
+    var today = Date.now();
+    var numberOfSessions = [];
+    for (let i = 0; i < days; i++) {
+        stats[i] = 0;
+    }
+    for (let i = 0; i < filtered.length; i++) {
+        
+    }
+}
+
 function dateStamps(days){
   var oneDayInMilliSeconds = 1000*60*60*24;
   dateArray = [];
@@ -33,3 +45,25 @@ function dateStamps(days){
     var dateUnix = today - (oneDayInMilliSeconds * i);
   }
 }
+
+function timePlayed(data, days) {
+    var filtered = filter_data_by_days(data);
+    console.log(filtered);
+    var today = Date.now();
+    var stats = [];
+    for (let i = 0; i < days; i++) {
+        stats[i] = 0;
+    }
+    for (let i = 0; i < filtered.length; i++) {
+        var session = filtered[i].session_end;
+        var index = Math.floor((today - session)/ (1000*60*60*24));
+        var hoursPlayed = (filtered[i].session_end - filtered[i].session_start)/3600000;
+        stats[days-1-index] += hoursPlayed;
+        console.log("index: " + index); 
+    }
+   
+    console.log(stats);
+    return stats.reverse();
+}
+
+
