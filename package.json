@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
+    "minecraft-server-util": "^5.2.9",
     "mysql": "^2.18.1",
     "socket.io": "^4.4.1",
     "sql-template-strings": "^2.2.2"

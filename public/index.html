@@ -10,14 +10,23 @@
     <title>METAweb</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="data_calculations.js"></script>
+    <script src="chart.js"></script>
 </head>
 
 <body style="margin:0">
     <div id="root"></div>
     <div class="container">
+
+        <div class="navbar">
+            <div class="headline"><a href="index.html">METAcraft server</a></div>
+            <!-- <a href="about.html" class="demo-btn">Demo</a> -->
+            <a href="about.html" class="home-btn">About us</a>
+        </div>
+
+        <!-- <button id="about" onClick="window.location.href='about.html';">About us</button> -->
         <ul>
             <div class="sidebar-comp">
-                <h2 class="h2-sidebar">METAcraft server</h2>
                 <div class="hr-sidebar"></div>
 
                 <div class="head-group">
@@ -35,7 +44,8 @@
 
                 <div class="hr-sidebar"></div>
 
-                <div class="head-group">
+
+                <div class="head-group-skull">
                     <img class="img-head" src="resources/skull.png"></img>
                     <h2 class="h2-chartText" id="adaptiveText">Server Stats</h2>
                 </div>
@@ -61,8 +71,6 @@
         </ul>
     </div>
     <script src="App.js"> </script>
-    <script src="chart.js"></script>
-    <a href="about.html">About us</a>
 
 
 </body>

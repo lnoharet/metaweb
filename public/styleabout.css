@@ -6,8 +6,10 @@
 .navbar {
     display: flex;
     flex-direction: row;
-    margin-top: 40px;
-    margin-left: 40px;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-bottom: 20px;
+    background-color: black;
 }
 
 .home-btn {
@@ -30,6 +32,7 @@
     font-family: 'Minecrafter';
     font-size: 28px;
     color: white;
+    letter-spacing: 0.1em;
 }
 
 body {

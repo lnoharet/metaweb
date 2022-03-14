@@ -108,7 +108,7 @@ io.on("connection", (socket) => {
           if (err) throw err;
 
           // Calculate total time played
-
+          var result = res;
 
           io.sockets.emit("get_stat_response", { result, stat });
         });
@@ -142,6 +142,18 @@ io.on("connection", (socket) => {
             result[i] = session_length;
           }
           io.sockets.emit("get_stat_response", { result, stat });
+        });
+        break;
+
+        case "7":
+        // Mob Kills
+        //var sql_query = (SQL`select (sum(case uuid when ${userid} then mob_kills else 0 end)) from plan_sessions`);
+        var sql_query = (SQL `select session_end, mob_kills from plan_sessions where uuid = ${userid}`);
+        console.log(sql_query);
+        db.query(sql_query, function(err, res){
+          if (err) throw err;
+          var result = res;
+          io.sockets.emit("get_stat_response", {result, stat});
         });
         break;
       default:

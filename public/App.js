@@ -4,14 +4,8 @@ socket.emit("get_users");
 window.current_user = null;
 window.last_x_days = 7 * 24 * 60 * 60 * 1000; // ms
 var current_stat;
-var filtered_data = [];
+//var filtered_data = [];
 
-// Create User buttons
-/*
-1. Get user names into an array
-2. Create buttons with the value same as username
-3. AddEventListener on "click" to set as a global variable the buttons value/username
-*/
 var users; // list of all users
 
 
@@ -99,43 +93,45 @@ function displayFriendsList(users) {
     });
   }
 }
+
 /*------------------------------------------------------------------------------------------------*/
 // Socket communication
 
 socket.on("get_stat_response", function (arg) {
   console.log(arg.result);
   var stat = arg.stat;
-  var data;
-  var today = new Date().getTime();
-  console.log(today);
-  console.log(today - last_x_days);
+  var data = arg.result;
 
   switch (stat) {
     case "1":
       // Mob Kills
-      data = arg.result;
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].session_end > today - last_x_days) {
-          filtered_data[i] = data[i].mob_kills;
-        }
-      }
-      console.log(filtered_data);
-      window.chart_data = filtered_data;
+      renderChart(group_into_dates(data, 7, "mob_kills"), "Mobs killed", dateStamps(7));
+
       break;
     case "2":
       // Player Kills
+      renderChart(group_into_dates(data, 7, "kills"), "Players killed", dateStamps(7));
+      //console.log(stat);
+      // Lisa
       break;
 
     case "3":
       // Deaths
+      renderChart(group_into_dates(data, 7, "deaths"), "Player deaths", dateStamps(7));
+
       break;
 
     case "4":
       // Time played
+      // Lisa
+      console.log(stat);
+      renderChart(timePlayed(data, 7), "Time played in hours", dateStamps(7));
       break;
 
     case "5":
       // Amount of sessions played
+      renderChart(sessionsPlayed(data, 7), "Amount of sessions", dateStamps(7));
+      //console.log(group_into_dates());
       break;
 
     case "6":
@@ -143,8 +139,8 @@ socket.on("get_stat_response", function (arg) {
       break;
 
     default:
+        break;
   }
-  renderChart(filtered_data);
 });
 
 /*------------------------------------------------------------------------------------------------*/
