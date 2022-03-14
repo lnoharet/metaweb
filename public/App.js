@@ -56,19 +56,19 @@ socket.on("get_stat_response", function (arg) {
   switch (stat) {
     case "1":
       // Mob Kills
-      renderChart(group_into_dates(data, 7, "mob_kills"));
+      renderChart(group_into_dates(data, 7, "mob_kills"), "Mobs killed", dateStamps(7));
 
       break;
     case "2":
       // Player Kills
-      renderChart(group_into_dates(data, 7, "kills"));
+      renderChart(group_into_dates(data, 7, "kills"), "Players killed", dateStamps(7));
       //console.log(stat);
       // Lisa
       break;
 
     case "3":
       // Deaths
-      renderChart(group_into_dates(data, 7, "deaths"));
+      renderChart(group_into_dates(data, 7, "deaths"), "Player deaths", dateStamps(7));
 
       break;
 
@@ -76,12 +76,12 @@ socket.on("get_stat_response", function (arg) {
       // Time played
       // Lisa
       console.log(stat);
-      renderChart(timePlayed(data, 7));
+      renderChart(timePlayed(data, 7), "Time played in hours", dateStamps(7));
       break;
 
     case "5":
       // Amount of sessions played
-      renderChart(group_into_dates(data, 7, "session_end"));
+      renderChart(group_into_dates(data, 7, "session_end"), "Amount of sessions", dateStamps(7));
       //console.log(group_into_dates());
       break;
 

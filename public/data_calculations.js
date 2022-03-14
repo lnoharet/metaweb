@@ -22,7 +22,7 @@ function group_into_dates(data, days, stat_type) {
         console.log("index: " + index); 
     }
     console.log("stats: " + stats);
-    return stats.reverse();
+    return stats;
 }
 
 function sessionsPlayed(data, days){
@@ -37,14 +37,18 @@ function sessionsPlayed(data, days){
     }
 }
 
-function dateStamps(days){
-  var oneDayInMilliSeconds = 1000*60*60*24;
-  dateArray = [];
-  var today = Date.now();
-  for (let i=0; i<days; i++){
-    var dateUnix = today - (oneDayInMilliSeconds * i);
+function dateStamps(days){  // date stamps for x-axis on chart
+    var oneDayInMilliSeconds = 1000*60*60*24;
+    dateArray = [];
+    var today = Date.now();
+    for (let i=0; i<days; i++){
+      var dateUnix = new Date(today - (oneDayInMilliSeconds * i));
+      var day = dateUnix.getDate();
+      var month = dateUnix.getMonth();
+      dateArray.push(day + "/" + month);
+    }
+    return dateArray.reverse();
   }
-}
 
 function timePlayed(data, days) {
     var filtered = filter_data_by_days(data);
@@ -63,7 +67,7 @@ function timePlayed(data, days) {
     }
    
     console.log(stats);
-    return stats.reverse();
+    return stats;
 }
 
 

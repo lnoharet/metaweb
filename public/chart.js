@@ -1,24 +1,8 @@
-function renderChart(data) {
-
-  function unix_to_s_m_h( time ) {
-    var diff = Math.floor(time / 1000), units = [
-      { d: 60, l: "seconds" },
-      { d: 60, l: "minutes" },
-      { d: 24, l: "hours" }
-      ];
-    var s = [];
-    for (var i = 0; i < units.length; ++i) {
-      s[i] =  (diff % units[i].d);
-      diff = Math.floor(diff / units[i].d);
-    }
-    console.log(s)
-    return s;
-  }
-
+function renderChart(data, label, date) {
+  tickLabels = date;
   
   //const data = filtered_data; //[40, 39, 90, 100, 20];
   d3.select("svg").remove();
-  console.log(data);
   const isAllZero = data.every(item => item === 0);
   isAllZero ? data_max = 10 : data_max = Math.max(...data);
   
@@ -41,7 +25,8 @@ function renderChart(data) {
 
   const yScale = d3.scaleLinear().domain([0, data_max]).range([h, 0]);
 
-  const xAxis = d3.axisBottom(xScale).ticks(data.length);
+  const xAxis = d3.axisBottom(xScale).ticks(data.length).tickFormat(function(d,i){ return tickLabels[i] });
+
 
   const yAxis = d3.axisLeft(yScale).ticks(7);
 
@@ -60,7 +45,30 @@ function renderChart(data) {
         .text("a simple tooltip");
 
   svg.append("g").call(xAxis).attr("transform", `translate(0, ${h})`).style("font-family", 'Montserrat');
+
+  svg.append("text")             
+  .attr("transform",
+        "translate(" + (w) + " ," + 
+                       (h + 30) + ")")
+  .style("text-anchor", "middle")
+  .text("Date")
+  .style("padding", "10px")
+  .style("fill", "#fff")
+  .style("font-family", 'Montserrat')
+  .style("font-size", '14px');
+
   svg.append("g").call(yAxis).style("font-family", 'Montserrat');
+
+  svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -40)
+      .attr("x",0 - (h / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text(label)
+      .style("fill", "#fff")
+      .style("font-family", 'Montserrat')
+      .style("font-size", '14px');     
 
   svg
     .selectAll(".bar")
