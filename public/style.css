@@ -156,3 +156,20 @@ select {
   color: black;
   
 }
+.wrapper {
+  position: relative;
+  display: flex;
+  min-width: 100px;
+}
+.searchBar {
+  color:grey;
+  text-align: left;
+  border-radius: 5px;
+  height: 20px;
+  width: 120px;
+  margin-bottom: 7px;
+  margin-left: 30px;
+  padding: 2px 23px 2px 30px;
+  background-color: black;
+  border: 1px solid grey;  
+}
