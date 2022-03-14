@@ -5,7 +5,7 @@
 
 body {
   background-color: grey;
-  height: 100%;
+  height: 100vh;
 }
 
 .navbar {
@@ -98,9 +98,14 @@ ul{
   flex-direction: column;
   background-color: black;
   width: 400px;
-  height: 100vh;
+  height: 90vh;
   margin-left: 0px;
   margin-top: -20px;
+  margin-bottom: -50px;
+}
+
+.sidebar-chart {
+  margin: 0px;
 }
 
 .h2-sidebar {
@@ -120,6 +125,15 @@ ul{
   margin-left: 20px;
   margin-bottom: 20px;
 }
+
+.head-group-skull {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-left: 20px;
+  margin-bottom: 0px;
+}
+
 
 .h2-players {
   margin-left: 10px;
@@ -150,7 +164,7 @@ ul{
   flex-direction: column;
   background-color: black;
   width: 300px;
-  height: 250px;
+  height: 200px;
   overflow: scroll;
 }
 
@@ -221,9 +235,9 @@ select {
   color: white;
   background-color: black;
   border: none;
-  width: 230px;
+  width: 290px;
   float:right;
-  margin-right: 10px;
+  margin-right: 35px;
   margin-top: 10px;
   outline: 0;
   cursor: pointer;

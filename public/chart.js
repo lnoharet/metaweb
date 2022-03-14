@@ -5,9 +5,21 @@ function renderChart(data, label, date) {
   d3.select("svg").remove();
   const isAllZero = data.every(item => item === 0);
   isAllZero ? data_max = 10 : data_max = Math.max(...data);
+
+  function circle_pattern(x_value, y_value, r_value) {
+    isAllZero ?  svg.append('circle')
+    .attr('cx', x_value)
+  .attr('cy', y_value)
+  .attr('r', r_value)
+  .attr('stroke', 'none')
+  .attr('fill', "#B2085C") 
+  : " ";
+
+    return svg;
+  }
   
   const w = 300;
-  const h = 300;
+  const h = 250;
   const svg = d3
     .select("#d3-container")
     .append("svg")
@@ -16,6 +28,25 @@ function renderChart(data, label, date) {
     .style("overflow", "visible")
     .style("padding-top", "40px")
     .style("margin-left", "60px");
+
+ 
+  circle_pattern(70, 150, 50)
+  circle_pattern(180, 120, 100)
+
+
+  isAllZero ?  svg.append("text")    
+  .style("z-index", "10")         
+  .attr("transform",
+        "translate(150, 150)")
+  .style("text-anchor", "middle")
+  .text("No activity for this time period")
+  .style("padding", "10px")
+  .style("fill", "#fff")
+  .style("font-family", 'Montserrat')
+  .style("font-size", '14px') 
+  : " ";
+
+
 
   const xScale = d3
     .scaleBand()
@@ -49,7 +80,7 @@ function renderChart(data, label, date) {
   svg.append("text")             
   .attr("transform",
         "translate(" + (w) + " ," + 
-                       (h + 30) + ")")
+                       (h + 40) + ")")
   .style("text-anchor", "middle")
   .text("Date")
   .style("padding", "10px")
@@ -61,7 +92,7 @@ function renderChart(data, label, date) {
 
   svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -40)
+      .attr("y", -50)
       .attr("x",0 - (h / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
