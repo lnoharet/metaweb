@@ -34,7 +34,7 @@ socket.on("get_users_response", function (arg) {
       return player.toLowerCase().includes(searchString);
     });
 
-    const filtered_users = users.filter(user => { return user.name.toLowerCase().includes(searchString) })
+    const filtered_users = users.filter((list => list.uuid !== current_user)).filter(user => { return user.name.toLowerCase().includes(searchString) });
     //console.log(filtered_users);
 
     if (filtered_users.length == 0 && searchString == "") {
