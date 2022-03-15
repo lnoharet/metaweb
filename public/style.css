@@ -8,6 +8,12 @@ body {
   height: 100vh;
 }
 
+.heatmap-container {
+  background-image: url("./resources/map.png");
+  width: 500*96/64;
+  height: 600px;
+}
+
 .flex-view {
   display: flex;
   flex-direction: row;

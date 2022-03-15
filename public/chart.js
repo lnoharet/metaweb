@@ -47,8 +47,6 @@ function renderChart(data, label, date) {
   .style("font-size", '14px') 
   : " ";
 
-
-
   const xScale = d3
     .scaleBand()
     .domain(data.map((val, i) => i))
@@ -62,7 +60,7 @@ function renderChart(data, label, date) {
 
   const yAxis = d3.axisLeft(yScale).ticks(7);
 
-  const tooltip = d3.select("body")
+  const tooltip = d3.select("#d3-container")
         .append("div")
         .attr("class","d3-tooltip")
         .style("position", "absolute")
@@ -75,6 +73,7 @@ function renderChart(data, label, date) {
         .style("font-family", 'Montserrat')
         .style("font-size", '12px')
         .text("a simple tooltip");
+
 
   svg.append("g").call(xAxis).attr("transform", `translate(0, ${h})`).style("font-family", 'Montserrat');
 
@@ -111,7 +110,7 @@ function renderChart(data, label, date) {
     .attr("width", xScale.bandwidth())
     .attr("height", (val) => h - yScale(val))
     .style("fill", "#B2085C")
-    .on("mouseover", function(d, i) {
+    .on("mouseover", function(event, d, i) {
       tooltip.html(`Data: ${d}`).style("visibility", "visible");
     })
       .on("mousemove", function(){
@@ -122,5 +121,4 @@ function renderChart(data, label, date) {
       .on("mouseout", function() {
       tooltip.html(``).style("visibility", "hidden");
     });
-
 }
