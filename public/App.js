@@ -6,6 +6,7 @@ window.current_player_name = null; // for heatmap (name)
 
 window.last_x_days = 7 * 24 * 60 * 60 * 1000; // ms
 window.current_stat = null;
+window.days = 7;
 //var filtered_data = [];
 
 var users; // list of all users
@@ -128,7 +129,7 @@ socket.on("get_stat_response", function (arg) {
   console.log(arg.result);
   var stat = arg.stat;
   var data = arg.result;
-  var days = document.getElementById("daysRange").value;
+  //var days = document.getElementById("daysRange").value;
   document.getElementById("slidecontainer").removeAttribute("hidden");
   if(window.current_user == null){
     // server stats 
@@ -200,6 +201,17 @@ function selectChange(stat_selection) {
       stat: window.current_stat,
     });
   }
+}
+
+function sliderChange(new_days){
+    document.getElementById('chosen-day-range').innerHTML = new_days + ' days';
+    window.days = new_days;    
+    if (window.current_stat != null) {
+      socket.emit("get_stat", {
+        user: window.current_user,
+        stat: window.current_stat,
+      });
+    }
 }
 
 function dropdownServer(){
