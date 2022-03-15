@@ -4,8 +4,13 @@
 }
 
 body {
-  background-color: grey;
+  background-color: #292929;
   height: 100vh;
+}
+
+.flex-view {
+  display: flex;
+  flex-direction: row;
 }
 
 .navbar {
@@ -206,6 +211,7 @@ ul{
   list-style-type: none;
   font-family: 'Montserrat', sans-serif;
   padding: 7px;
+  cursor: pointer;
 
 }
 

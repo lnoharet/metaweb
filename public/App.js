@@ -17,7 +17,7 @@ socket.on("get_users_response", function (arg) {
   console.log("get_users_response");
   users = arg;
 
-  users.sort((a, b) => (a.name > b.name) ? 1 : -1);
+  users.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
 
   displayFriendsList(users);
 
