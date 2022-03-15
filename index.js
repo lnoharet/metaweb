@@ -66,99 +66,154 @@ io.on("connection", (socket) => {
     console.log("fetching stat for user ".concat(userid));
     console.log("fetching stat ".concat(stat));
 
-    // SQL queries depending on selected stat
-    switch (stat) {
-      case "1":
-        // Mob Kills
-        //var sql_query = (SQL`select (sum(case uuid when ${userid} then mob_kills else 0 end)) from plan_sessions`);
-        var sql_query = (SQL`select session_end, mob_kills from plan_sessions where uuid = ${userid}`);
-        console.log(sql_query);
-        db.query(sql_query, function (err, res) {
-          if (err) throw err;
-          var result = res;
-          io.sockets.emit("get_stat_response", { result, stat });
-        });
-        break;
-      case "2":
-        // Player Kills
-        var sql_query = (SQL`select date from plan_kills where killer_uuid = ${userid}`);
-        console.log(sql_query);
-        db.query(sql_query, function (err, res) {
-          if (err) throw err;
-          var result = res;
-          io.sockets.emit("get_stat_response", { result, stat });
-        });
-
-        break;
-      case "3":
-        // Deaths
-        var sql_query = (SQL`select session_end, deaths from plan_sessions where uuid = ${userid}`);
-        console.log(sql_query);
-        db.query(sql_query, function (err, res) {
-          if (err) throw err;
-          var result = res;
-          io.sockets.emit("get_stat_response", { result, stat });
-        });
-        break;
-      case "4":
-        // Time played
-        var sql_query = (SQL`select session_start, session_end from plan_sessions where uuid = ${userid}`);
-        console.log(sql_query);
-        db.query(sql_query, function (err, res) {
-          if (err) throw err;
-
-          // Calculate total time played
-          var result = res;
-
-          io.sockets.emit("get_stat_response", { result, stat });
-        });
-
-        break;
-      case "5":
-        // Amount of sessions played
-        var sql_query = (SQL`select session_end from plan_sessions where uuid = ${userid}`);
-        console.log(sql_query);
-        db.query(sql_query, function (err, res) {
-          var result = res;
-          if (err) throw err;
-          io.sockets.emit("get_stat_response", { result, stat });
-        });
-        break;
-      case "6":
-        // Average Session length
-        var sql_query = (SQL`select session_start, session_end from plan_sessions where uuid = ${userid}`);
-        console.log(sql_query);
-        db.query(sql_query, function (err, res) {
-          if (err) throw err;
-          var result = [];
-          // Calculate total time played
-          for (let i = 0; i < res.length; i++) {
-            var tstart = res[i].session_start;
-            var tend = res[i].session_end;
-            var diff = tend - tstart;
-
-            var session_length = unix_to_s_m_h(diff);
-            // adds session_lengths to an array. each session_length is [seconds, minutes, hours] format.
-            result[i] = session_length;
-          }
-          io.sockets.emit("get_stat_response", { result, stat });
-        });
-        break;
-
-        case "7":
-        // Mob Kills
-        //var sql_query = (SQL`select (sum(case uuid when ${userid} then mob_kills else 0 end)) from plan_sessions`);
-        var sql_query = (SQL `select session_end, mob_kills from plan_sessions where uuid = ${userid}`);
-        console.log(sql_query);
-        db.query(sql_query, function(err, res){
-          if (err) throw err;
-          var result = res;
-          io.sockets.emit("get_stat_response", {result, stat});
-        });
-        break;
-      default:
-        console.log("def");
+    if(userid == null){
+      // Server stat
+      /*
+        * Totala mob kills per dag  (1)
+        * Totala deaths per dag  (2)
+        * Totala player kills per dag (3)
+        * Antal unika spelare per dag  (4)
+      */
+      switch (stat) {
+        case "1":
+          // Total mob kills 
+          var sql_query = (SQL`select session_end, mob_kills from plan_sessions`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+            var result = res;
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+          break;
+        case "2":
+          // total deaths
+          var sql_query = (SQL`select date from plan_kills`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+            var result = res;
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+          break;
+        case "3":
+          // total player kills
+          var sql_query = (SQL`select session_end, deaths from plan_sessions`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+            var result = res;
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+          break;
+        case "4":
+          var sql_query = (SQL`select uuid, session_end from plan_sessions`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+            var result = res;
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+          break;
+      }
     }
+    else{
+      // user specific stats
+      switch (stat) {
+        case "1":
+          // Mob Kills
+          //var sql_query = (SQL`select (sum(case uuid when ${userid} then mob_kills else 0 end)) from plan_sessions`);
+          var sql_query = (SQL`select session_end, mob_kills from plan_sessions where uuid = ${userid}`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+            var result = res;
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+          break;
+        case "2":
+          // Player Kills
+          var sql_query = (SQL`select date from plan_kills where killer_uuid = ${userid}`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+            var result = res;
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+  
+          break;
+        case "3":
+          // Deaths
+          var sql_query = (SQL`select session_end, deaths from plan_sessions where uuid = ${userid}`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+            var result = res;
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+          break;
+        case "4":
+          // Time played
+          var sql_query = (SQL`select session_start, session_end from plan_sessions where uuid = ${userid}`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+  
+            // Calculate total time played
+            var result = res;
+  
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+  
+          break;
+        case "5":
+          // Amount of sessions played
+          var sql_query = (SQL`select session_end from plan_sessions where uuid = ${userid}`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            var result = res;
+            if (err) throw err;
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+          break;
+        case "6":
+          // Average Session length
+          var sql_query = (SQL`select session_start, session_end from plan_sessions where uuid = ${userid}`);
+          console.log(sql_query);
+          db.query(sql_query, function (err, res) {
+            if (err) throw err;
+            var result = [];
+            // Calculate total time played
+            for (let i = 0; i < res.length; i++) {
+              var tstart = res[i].session_start;
+              var tend = res[i].session_end;
+              var diff = tend - tstart;
+  
+              var session_length = unix_to_s_m_h(diff);
+              // adds session_lengths to an array. each session_length is [seconds, minutes, hours] format.
+              result[i] = session_length;
+            }
+            io.sockets.emit("get_stat_response", { result, stat });
+          });
+          break;
+  
+          case "7":
+          // Mob Kills
+          //var sql_query = (SQL`select (sum(case uuid when ${userid} then mob_kills else 0 end)) from plan_sessions`);
+          var sql_query = (SQL `select session_end, mob_kills from plan_sessions where uuid = ${userid}`);
+          console.log(sql_query);
+          db.query(sql_query, function(err, res){
+            if (err) throw err;
+            var result = res;
+            io.sockets.emit("get_stat_response", {result, stat});
+          });
+          break;
+        default:
+          console.log("def");
+      }
+
+    }
+    // SQL queries depending on selected stat
+    
   });
 });
 

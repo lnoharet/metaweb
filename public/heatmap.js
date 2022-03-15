@@ -7,7 +7,7 @@ function summa(arr){
 }
 
 function render_heatmap(){
-    d3.select("svg").remove(); // Not good, tar bort charten på sidan också
+    d3.select("#heatmap").remove(); // Not good, tar bort charten på sidan också
     console.log("rendering heatmap");
     // set the dimensions and margins of the graph
 
@@ -17,12 +17,13 @@ function render_heatmap(){
 
 
     // append the svg object to the body of the page
-    const svg = d3.select("#heatmap")
+    const svg = d3.select("#heatmap-container")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    .attr("transform", `translate(${margin.left}, ${margin.top})`)
+    .attr("id", "heatmap");
 
     //Read the data
     //d3.csv("https://raw.githubusercontent.com/glas444/data/main/heatmap_data3.csv").then(function(data) {

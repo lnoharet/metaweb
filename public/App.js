@@ -102,6 +102,13 @@ function displayFriendsList(users) {
         this.className = "player-container";
         window.current_user = null;
         window.current_player_name = null;
+        
+        if(window.current_stat != null){
+          socket.emit("get_stat", {
+            user: window.current_user,
+            stat: window.current_stat,
+          });
+        }
 
         chartText.textContent = "Server Stats";
         //TODO: Query server stats
@@ -118,45 +125,62 @@ socket.on("get_stat_response", function (arg) {
   console.log(arg.result);
   var stat = arg.stat;
   var data = arg.result;
-
-  switch (stat) {
-    case "1":
-      // Mob Kills
-      renderChart(group_into_dates(data, 7, "mob_kills"), "Mobs killed", dateStamps(7));
-
-      break;
-    case "2":
-      // Player Kills
-      renderChart(group_into_dates(data, 7, "kills"), "Players killed", dateStamps(7));
-      //console.log(stat);
-      // Lisa
-      break;
-
-    case "3":
-      // Deaths
-      renderChart(group_into_dates(data, 7, "deaths"), "Player deaths", dateStamps(7));
-
-      break;
-
-    case "4":
-      // Time played
-      // Lisa
-      console.log(stat);
-      renderChart(timePlayed(data, 7), "Time played in hours", dateStamps(7));
-      break;
-
-    case "5":
-      // Amount of sessions played
-      renderChart(sessionsPlayed(data, 7), "Amount of sessions", dateStamps(7));
-      //console.log(group_into_dates());
-      break;
-
-    case "6":
-      // Session length
-      break;
-
-    default:
+  var days = 7;
+  if(window.current_user == null){
+    // server stats 
+    switch(stat){
+      case "1":
+        // Total mob kills
+        renderChart(group_into_dates(data, days, "mob_kills"), "Mobs killed", dateStamps(days));
         break;
+      case "2":
+        // Total player kills
+        renderChart(group_into_dates(data, days, "kills"), "Players killed", dateStamps(days));
+        break;
+      case "3":
+        // total deaths
+        renderChart(group_into_dates(data, days, "deaths"), "Player deaths", dateStamps(days));
+        break;
+      case "4":
+        // Unique players
+        renderChart(get_unique_players(data, days), "Amount of unique players online", dateStamps(days));
+        break;
+    }
+  }
+  else{
+    switch (stat) {
+      case "1":
+        // Mob Kills
+        renderChart(group_into_dates(data, days, "mob_kills"), "Mobs killed", dateStamps(days));
+
+        break;
+      case "2":
+        // Player Kills
+        renderChart(group_into_dates(data, days, "kills"), "Players killed", dateStamps(days));
+        //console.log(stat);
+        break;
+
+      case "3":
+        // Deaths
+        renderChart(group_into_dates(data, days, "deaths"), "Player deaths", dateStamps(days));
+
+        break;
+
+      case "4":
+        // Time played
+        console.log(stat);
+        renderChart(timePlayed(data, days), "Time played in hours", dateStamps(days));
+        break;
+
+      case "5":
+        // Amount of sessions played
+        renderChart(sessionsPlayed(data, days), "Amount of sessions", dateStamps(days));
+        break;
+
+
+      default:
+          break;
+    }
   }
 });
 
