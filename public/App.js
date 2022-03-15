@@ -135,19 +135,19 @@ socket.on("get_stat_response", function (arg) {
     switch(stat){
       case "1":
         // Total mob kills
-        renderChart(group_into_dates(data, days, "mob_kills"), "Mobs killed", dateStamps(days));
+        renderChart(group_into_dates(data, days, "mob_kills"), "Total mobs killed", dateStamps(days));
         break;
       case "2":
         // Total player kills
-        renderChart(group_into_dates(data, days, "kills"), "Players killed", dateStamps(days));
+        renderChart(group_into_dates(data, days, "kills"), "Total players killed", dateStamps(days));
         break;
       case "3":
         // total deaths
-        renderChart(group_into_dates(data, days, "deaths"), "Player deaths", dateStamps(days));
+        renderChart(group_into_dates(data, days, "deaths"), "Total player deaths", dateStamps(days));
         break;
       case "4":
         // Unique players
-        renderChart(get_unique_players(data, days), "Amount of unique players online", dateStamps(days));
+        renderChart(get_unique_players(data, days), "Unique players online", dateStamps(days));
         break;
     }
   }

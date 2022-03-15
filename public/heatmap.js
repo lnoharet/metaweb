@@ -12,8 +12,8 @@ function render_heatmap(){
     console.log("rendering heatmap");
     // set the dimensions and margins of the graph
 
-    var margin =  {top: 0, right: 0, bottom: 0, left: 0},
-    width = 600*96/64;
+    //var margin =  {top: 0, right: 0, bottom: 0, left: 0},
+    width = 900;
     height = 600;
 
 
@@ -21,10 +21,10 @@ function render_heatmap(){
     const svg = d3.select("#heatmap")
     .append("svg")
     .attr("id", "heatmap-svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width)
+    .attr("height", height)
     .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`)
+    //.attr("transform", `translate(${margin.left}, ${margin.top})`)
 
     //Read the data
     //d3.csv("https://raw.githubusercontent.com/glas444/data/main/heatmap_data3.csv").then(function(data) {
@@ -103,7 +103,7 @@ function render_heatmap(){
         .style("color", "white")
         .style("padding-left", "10px")
         .style("font-family", 'Montserrat')
-        .style("font-size", '14px');   
+        .style("font-size", '1rem');   
 
     // Three function that change the tooltip when user hover / move / leave a cell
     const mouseover = function(event,d) {
@@ -116,6 +116,7 @@ function render_heatmap(){
     const mousemove = function(event,d) {
         tooltip
         .html("Location <br>"+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>These players have visited lately: "+ d.names.join(', '))
+
         .style("position", "fixed")
     }
     const mouseleave = function(event,d) {
@@ -143,6 +144,7 @@ function render_heatmap(){
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
+      
         
         //scale on the side
 
@@ -174,7 +176,8 @@ function render_heatmap(){
     
                     return Math.floor(yScale(d)) - Math.floor(yScale(d+1)-3);
                     })
-                .attr("fill", (d) => cScale(100-d));
+                .attr("fill", (d) => cScale(100-d))
+                
         
             var yAxis = d3.axisRight(yAxScale);
         
@@ -184,8 +187,8 @@ function render_heatmap(){
             .attr("class", "y axis")
             .attr("color", "grey")
             .attr("transform", "translate(22,12)")
-            .call(yAxis);
-        
+            .call(yAxis)
+            
             
         }
     
