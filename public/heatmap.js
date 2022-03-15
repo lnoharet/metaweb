@@ -5,9 +5,10 @@ function summa(arr){
     }
     return sum;
 }
-
+var square_opacity = 0.5;
 function render_heatmap(){
-    d3.select("#heatmap").remove(); // Not good, tar bort charten på sidan också
+    d3.select("#heatmap-svg").remove(); // Not good, tar bort charten på sidan också
+    //d3.select("#heatmap-container").remove();
     console.log("rendering heatmap");
     // set the dimensions and margins of the graph
 
@@ -17,13 +18,13 @@ function render_heatmap(){
 
 
     // append the svg object to the body of the page
-    const svg = d3.select("#heatmap-container")
+    const svg = d3.select("#heatmap")
     .append("svg")
+    .attr("id", "heatmap-svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`)
-    .attr("id", "heatmap");
 
     //Read the data
     //d3.csv("https://raw.githubusercontent.com/glas444/data/main/heatmap_data3.csv").then(function(data) {
@@ -60,31 +61,25 @@ function render_heatmap(){
     else{
         max_val = 100;
     }
-    console.log("hallee", window.current_player_name);
     // TODO: show color scale depending on max_val
     // TODO: Gör en color scale från genomskinlig till färg
-    // Lägg in det i index.html
-
 
     const myGroups = Array.from(new Set(data.map(d => d.coords[0])))
     const myVars = Array.from(new Set(data.map(d => d.coords[1])))
     const myValue = Array.from(new Set(data.map(d => d.value)))
     const myNames = Array.from(new Set(data.map(d => d.names)))
     
-
     // Build X scales and axis:
     const x = d3.scaleBand()
         .range([ 0, width ])
         .domain(myGroups)
         //.padding(0.05);
 
-
     // Build Y scales and axis:
     const y = d3.scaleBand()
         .range([ height, 0 ])
         .domain(myVars)
         //.padding(0.05);
-
 
     // Build color scale
     
@@ -128,7 +123,7 @@ function render_heatmap(){
         .style("opacity", 0)
         d3.select(this)
         .style("stroke", "none")
-        .style("opacity", 0.5)
+        .style("opacity", square_opacity)
     }
 
     // add the squares
@@ -144,13 +139,11 @@ function render_heatmap(){
         .style("fill", function(d) { return (myColor(summa(d.value)) === "#000004" ? "none" : myColor(summa(d.value)))} )
         .style("stroke-width", 4)
         .style("stroke", "none")
-        .style("opacity", 0.6)
+        .style("opacity", square_opacity)
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
 
-        
     })
-    
    
 }
