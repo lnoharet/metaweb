@@ -10,6 +10,9 @@
     <title>METAweb</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://d3js.org/d3.v6.js"></script>
+
+    <script src="heatmap.js"></script>
     <script src="data_calculations.js"></script>
     <script src="chart.js"></script>
 </head>
@@ -23,7 +26,7 @@
             <!-- <a href="about.html" class="demo-btn">Demo</a> -->
             <a href="about.html" class="home-btn">About us</a>
         </div>
-
+        
         <!-- <button id="about" onClick="window.location.href='about.html';">About us</button> -->
         <ul>
             <div class="sidebar-comp">
@@ -69,8 +72,11 @@
             </div>
 
         </ul>
+        <div id="heatmap" class ="heatmap-container"></div>
+
     </div>
     <script src="App.js"> </script>
+
 
 
 </body>

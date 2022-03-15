@@ -1,17 +1,18 @@
 var socket = io();
 socket.emit("get_users");
 
-window.current_user = null;
+window.current_user = null; // for plan_analytics sql (uuid)
+window.current_player_name = null; // for heatmap (name)
+
 window.last_x_days = 7 * 24 * 60 * 60 * 1000; // ms
-var current_stat;
+window.current_stat = null;
 //var filtered_data = [];
 
 var users; // list of all users
 
 
 // TODO: Add info about if the user is online or not and last seen online.
-
-
+render_heatmap();
 socket.on("get_users_response", function (arg) {
   console.log("get_users_response");
   users = arg;
@@ -66,6 +67,7 @@ function displayFriendsList(users) {
     playerContainer.className = "player-container";
     playerContainer.id = users[i].uuid;
     playerContainer.value = users[i].name;
+
     playerName.innerHTML = users[i].name;
     playerName.className = "player-name";
     var parentDiv = document.getElementById("player-list");
@@ -78,8 +80,19 @@ function displayFriendsList(users) {
           var last_player = document.getElementById(window.current_user);
           last_player.className = "player-container";
         }
+        
         window.current_user = this.id;
+        window.current_player_name = this.firstChild.innerHTML;
+        console.log("new player", this.firstChild.innerHTML);
         this.className = "player-container-selected";
+
+        // TODO: Query current stat for current user. and render heatmap
+        if(window.current_stat != null){
+          socket.emit("get_stat", {
+            user: window.current_user,
+            stat: window.current_stat,
+          });
+        }
 
         chartText.textContent =
           document.getElementById(this.id).firstChild.innerHTML + " Stats";
@@ -88,8 +101,12 @@ function displayFriendsList(users) {
       } else {
         this.className = "player-container";
         window.current_user = null;
+        window.current_player_name = null;
+
         chartText.textContent = "Server Stats";
+        //TODO: Query server stats
       }
+      render_heatmap();
     });
   }
 }
