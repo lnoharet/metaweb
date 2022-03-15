@@ -206,6 +206,7 @@ ul{
   list-style-type: none;
   font-family: 'Montserrat', sans-serif;
   padding: 7px;
+  cursor: pointer;
 
 }
 
