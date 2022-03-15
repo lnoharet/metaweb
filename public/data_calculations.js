@@ -48,7 +48,7 @@ function dateStamps(days){  // date stamps for x-axis on chart
     for (let i=0; i<days; i++){
       var dateUnix = new Date(today - (oneDayInMilliSeconds * i));
       var day = dateUnix.getDate();
-      var month = dateUnix.getMonth();
+      var month = dateUnix.getMonth()+1;
       dateArray.push(day + "/" + month);
     }
     return dateArray.reverse();

@@ -11,9 +11,9 @@ function render_heatmap(){
     console.log("rendering heatmap");
     // set the dimensions and margins of the graph
 
-    var margin =  {top: 80, right: 25, bottom: 30, left: 430},
-    width = 800*96/64 - margin.left - margin.right,
-    height = 800 - margin.top - margin.bottom;
+    var margin =  {top: 0, right: 0, bottom: 0, left: 0},
+    width = 600*96/64;
+    height = 600;
 
 
     // append the svg object to the body of the page
@@ -69,6 +69,7 @@ function render_heatmap(){
     const myVars = Array.from(new Set(data.map(d => d.coords[1])))
     const myValue = Array.from(new Set(data.map(d => d.value)))
     const myNames = Array.from(new Set(data.map(d => d.names)))
+    
 
     // Build X scales and axis:
     const x = d3.scaleBand()
@@ -85,22 +86,27 @@ function render_heatmap(){
 
 
     // Build color scale
+    
     const myColor = d3.scaleSequential()
         .interpolator(d3.interpolateInferno)
         .domain([1,max_val])
         //.range(["rgba(1,0,0,0)","rgba(1,0,0,1)"])
 
+    const myNoColor = d3.scaleSequential()
+    .interpolator(d3.interpolateInferno)
+    .domain([1,max_val])
+
     // create a tooltip
     const tooltip = d3.select("#heatmap")
         .append("div")
-        .style("opacity", 0.8)
-        .attr("class", "tooltip")
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "2px")
-        .style("border-radius", "5px")
-        .style("padding", "5px")
-        .style("margin-left", "400px")
+        .style("opacity", 1)
+        .style("width", width)
+        .style("height", "0px")
+        .style("background-color", "#292929")
+        .style("color", "white")
+        .style("padding-left", "10px")
+        .style("font-family", 'Montserrat')
+        .style("font-size", '14px');   
 
     // Three function that change the tooltip when user hover / move / leave a cell
     const mouseover = function(event,d) {
@@ -112,7 +118,7 @@ function render_heatmap(){
     }
     const mousemove = function(event,d) {
         tooltip
-        .html("Location <br>"+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>Players: "+ d.names)
+        .html("Location <br>"+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>Players: "+ d.names.join(', '))
         .style("left", (event.x)/2 + "px")
         .style("top", (event.y)/2 + "px")
     }
@@ -121,7 +127,7 @@ function render_heatmap(){
         .style("opacity", 0)
         d3.select(this)
         .style("stroke", "none")
-        .style("opacity", 0.8)
+        .style("opacity", 0.5)
     }
 
     // add the squares
@@ -134,14 +140,16 @@ function render_heatmap(){
         //.attr("ry", 4)
         .attr("width", x.bandwidth() )
         .attr("height", y.bandwidth() )
-        .style("fill", function(d) { return myColor(summa(d.value))} )
+        .style("fill", function(d) { return (myColor(summa(d.value)) === "#000004" ? "none" : myColor(summa(d.value)))} )
         .style("stroke-width", 4)
         .style("stroke", "none")
-        .style("opacity", 0.8)
+        .style("opacity", 0.6)
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
+
+        
     })
-
-
+    
+   
 }
