@@ -56,23 +56,28 @@
 
                 <div class="sidebar-chart">
                     <div class="stat_select_dropdown" id="stat_select_btn">
-                        <select onChange=selectChange(this.value) value="0">
+                        <select name="stats" onChange=selectChange(this.value) value="0">
                             <option value="0" hidden>Select stat:</option>
-                            <option value="1">Mob Kills</option>
-                            <option value="2">Player Kills</option>
-                            <option value="3">Deaths</option>
-                            <option value="4">Total time played</option>
-                            <option value="5">Amount of sessions played</option>
+                            <option value="1">Total Mob Kills</option>
+                            <option value="2">Total Player Kills</option>
+                            <option value="3">Total Deaths</option>
+                            <option value="4">Unique Players Online</option>
+                            <option value="5" id="final" hidden>Amount of sessions played</option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <div id="d3-container"></div>
                 </div>
+                <div class="slidecontainer" id="slidecontainer" hidden>
+                    <input type="range" min="0" max="30" value="7" class="slider" id="daysRange"
+                        onChange="document.getElementById('chosen-day-range').innerHTML = this.value + ' days'" />
+                    <label id="chosen-day-range">7 days</label>
+                </div>
             </div>
         </ul>
         <div id="heatmap" class ="heatmap-container"></div>
-        <svg id="seq1" width="40" height="680" ></svg>
+        <svg id="seq1" width="100" height="680" ></svg>
     </div>
 
     </div>

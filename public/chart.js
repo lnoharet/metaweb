@@ -12,7 +12,7 @@ function renderChart(data, label, date) {
   .attr('cy', y_value)
   .attr('r', r_value)
   .attr('stroke', 'none')
-  .attr('fill', "#B2085C") 
+  .attr('fill', "#292929") 
   : " ";
 
     return svg;
@@ -53,9 +53,12 @@ function renderChart(data, label, date) {
     .range([0, w])
     .padding(0.1);
 
+  tickLabels2 = []
   const yScale = d3.scaleLinear().domain([0, data_max]).range([h, 0]);
+  tickLabels.forEach(function(item, i) { i % 2 == 0 ? tickLabels2.push(tickLabels[i]) :tickLabels2.push(" ") } );
+  console.log(tickLabels2)
 
-  const xAxis = d3.axisBottom(xScale).ticks(data.length).tickFormat(function(d,i){ return tickLabels[i] });
+  const xAxis = d3.axisBottom(xScale).ticks(tickLabels.length).tickFormat(function(d,i){ return (tickLabels.length < 15 ? tickLabels[i] : tickLabels2[i])})
 
 
   const yAxis = d3.axisLeft(yScale).ticks(7);

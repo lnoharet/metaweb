@@ -19,7 +19,6 @@ function group_into_dates(data, days, stat_type) {
         var session = filtered[i].session_end;
         var index = Math.floor((today - session)/ (1000*60*60*24));
         stats[days-1-index] += filtered[i][stat_type];
-        console.log("index: " + index); 
     }
     console.log("stats: " + stats);
     return stats;
@@ -36,7 +35,6 @@ function sessionsPlayed(data, days){
         var session = filtered[i].session_end;
         var index = Math.floor((today - session)/ (1000*60*60*24));
         numberOfSessions[days-1-index] += 1;
-        console.log("index: " + index); 
     }
     return numberOfSessions;
 }

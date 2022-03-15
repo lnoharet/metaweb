@@ -12,7 +12,9 @@ body {
   background-image: url("./resources/map.png");
   width: 500*96/64;
   height: 600px;
+  /* //overflow: scroll; */
 }
+
 
 .flex-view {
   display: flex;
@@ -279,3 +281,12 @@ select {
 
 #d3-container{margin-bottom: 25px;}
 
+.slider{
+  margin-left: 90px;
+  width: 50%;
+  margin-top: 25px;
+}
+
+#chosen-day-range{
+  font-family: 'Montserrat', sans-serif;
+}

@@ -85,6 +85,7 @@ function displayFriendsList(users) {
         window.current_player_name = this.firstChild.innerHTML;
         console.log("new player", this.firstChild.innerHTML);
         this.className = "player-container-selected";
+        dropdownPlayer();
 
         // TODO: Query current stat for current user. and render heatmap
         if(window.current_stat != null){
@@ -102,6 +103,7 @@ function displayFriendsList(users) {
         this.className = "player-container";
         window.current_user = null;
         window.current_player_name = null;
+        dropdownServer();
         
         if(window.current_stat != null){
           socket.emit("get_stat", {
@@ -111,6 +113,7 @@ function displayFriendsList(users) {
         }
 
         chartText.textContent = "Server Stats";
+        dropdownServer();
         //TODO: Query server stats
       }
       render_heatmap();
@@ -125,7 +128,8 @@ socket.on("get_stat_response", function (arg) {
   console.log(arg.result);
   var stat = arg.stat;
   var data = arg.result;
-  var days = 7;
+  var days = document.getElementById("daysRange").value;
+  document.getElementById("slidecontainer").removeAttribute("hidden");
   if(window.current_user == null){
     // server stats 
     switch(stat){
@@ -196,4 +200,21 @@ function selectChange(stat_selection) {
       stat: window.current_stat,
     });
   }
+}
+
+function dropdownServer(){
+  document.getElementsByName("stats")[0].options[1].textContent = "Total Mob Kills";
+  document.getElementsByName("stats")[0].options[2].textContent = "Total Player Kills";
+  document.getElementsByName("stats")[0].options[3].textContent = "Total Deaths";
+  document.getElementsByName("stats")[0].options[4].textContent = "Unique Players Online";
+  let hidden = document.getElementById("final").getAttribute("hidden");
+  document.getElementById("final").setAttribute("hidden", "hidden");
+}
+
+function dropdownPlayer(){
+  document.getElementsByName("stats")[0].options[1].textContent = "Mob Kills";
+  document.getElementsByName("stats")[0].options[2].textContent = "Player Kills";
+  document.getElementsByName("stats")[0].options[3].textContent = "Deaths";
+  document.getElementsByName("stats")[0].options[4].textContent = "Total Time Played";
+  document.getElementById("final").removeAttribute("hidden");
 }

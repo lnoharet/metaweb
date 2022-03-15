@@ -116,8 +116,7 @@ function render_heatmap(){
     const mousemove = function(event,d) {
         tooltip
         .html("Location <br>"+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>These players have visited lately: "+ d.names.join(', '))
-        .style("left", (event.x)/2 + "px")
-        .style("top", (event.y)/2 + "px")
+        .style("position", "fixed")
     }
     const mouseleave = function(event,d) {
         tooltip
@@ -148,6 +147,7 @@ function render_heatmap(){
         //scale on the side
 
         function drawScale(id, interpolator) {
+        
             var data = Array.from(Array(100).keys());
         
             var cScale = d3.scaleSequential()
@@ -155,8 +155,12 @@ function render_heatmap(){
                 .domain([max_val,0]);
         
             var yScale = d3.scaleLinear()
-                .domain([0,max_val])
-                .range([0, height]);
+                .domain([100,0])
+                .range([-5,height-9]);
+            
+            var yAxScale = d3.scaleLinear()
+                .domain([100,0])
+                .range([0,height-15]);
         
             var u = d3.select("#" + id)
                 .selectAll("rect")
@@ -165,26 +169,26 @@ function render_heatmap(){
                 .append("rect")
                 .attr("y", (d) => Math.floor(yScale(d)))
                 .attr("x", 0)
-                .attr("width", 100)
+                .attr("width", 20)
                 .attr("height", (d) => {
-                    if (d == 99) {
-                        return 6;
-                    }
-                    return Math.floor(yScale(d+1)) - Math.floor(yScale(d)) + 1;
+    
+                    return Math.floor(yScale(d)) - Math.floor(yScale(d+1)-3);
                     })
-                .attr("fill", (d) => myColor(d));
+                .attr("fill", (d) => cScale(100-d));
         
-            var yAxis = d3.axisRight(yScale);
+            var yAxis = d3.axisRight(yAxScale);
         
             var svg = d3.select("#"+id);
         
             svg.append("g")
             .attr("class", "y axis")
-            .attr("transform", "translate(22,0)")
+            .attr("color", "grey")
+            .attr("transform", "translate(22,12)")
             .call(yAxis);
         
             
         }
+    
         drawScale("seq1", d3.interpolate(d3.interpolateInferno));
     })
 
