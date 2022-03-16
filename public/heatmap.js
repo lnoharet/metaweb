@@ -189,6 +189,14 @@ function render_heatmap(){
             .attr("transform", "translate(22,12)")
             .call(yAxis)
             
+            svg.append("text")
+            .attr("class", "legendTitle")
+            .attr("x", 250)
+            .attr("y", -55)
+            .style("text-anchor", "left")
+            .attr("transform", "rotate(90)")
+            .text("Player Activity ")
+            .style('fill', 'grey');
             
         }
     
