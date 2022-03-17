@@ -7,6 +7,8 @@ window.current_player_name = null; // for heatmap (name)
 window.last_x_days = 7 * 24 * 60 * 60 * 1000; // ms
 window.current_stat = null;
 
+window.days = 7;
+
 window.users; // list of all users
 var sessions;
 window.users_with_last_seen = [];
@@ -42,7 +44,10 @@ function create_userlist(){
     const filteredPlayers = players.filter(player => {
       return player.toLowerCase().includes(searchString);
     });
-    const filtered_users = window.users.filter(user => { return user.name.toLowerCase().includes(searchString) })
+
+
+    const filtered_users = users.filter((list => list.uuid !== current_user)).filter(user => { return user.name.toLowerCase().includes(searchString) });
+
     if (filtered_users.length == 0 && searchString == "") {
       displayUserList(window.users);
     }
@@ -91,6 +96,7 @@ function displayUserList(usrs) {
         window.current_player_name = this.firstChild.innerHTML;
         console.log("new player", this.firstChild.innerHTML);
         this.className = "player-container-selected";
+        dropdownPlayer();
 
         if(window.current_stat != null){
           socket.emit("get_stat", {
@@ -106,6 +112,7 @@ function displayUserList(usrs) {
         this.className = "player-container";
         window.current_user = null;
         window.current_player_name = null;
+        dropdownServer();
         
         if(window.current_stat != null){
           socket.emit("get_stat", {
@@ -114,6 +121,7 @@ function displayUserList(usrs) {
           });
         }
         chartText.textContent = "Server Stats";
+        dropdownServer();
       }
       render_heatmap();
     });
@@ -124,25 +132,26 @@ socket.on("get_stat_response", function (arg) {
   console.log(arg.result);
   var stat = arg.stat;
   var data = arg.result;
-  var days = 7;
+  //var days = document.getElementById("daysRange").value;
+  document.getElementById("slidecontainer").removeAttribute("hidden");
   if(window.current_user == null){
     // server stats 
     switch(stat){
       case "1":
         // Total mob kills
-        renderChart(group_into_dates(data, days, "mob_kills"), "Mobs killed", dateStamps(days));
+        renderChart(group_into_dates(data, days, "mob_kills"), "Total mobs killed", dateStamps(days));
         break;
       case "2":
         // Total player kills
-        renderChart(group_into_dates(data, days, "kills"), "Players killed", dateStamps(days));
+        renderChart(group_into_dates(data, days, "kills"), "Total players killed", dateStamps(days));
         break;
       case "3":
         // total deaths
-        renderChart(group_into_dates(data, days, "deaths"), "Player deaths", dateStamps(days));
+        renderChart(group_into_dates(data, days, "deaths"), "Total player deaths", dateStamps(days));
         break;
       case "4":
         // Unique players
-        renderChart(get_unique_players(data, days), "Amount of unique players online", dateStamps(days));
+        renderChart(get_unique_players(data, days), "Unique players online", dateStamps(days));
         break;
     }
   }
@@ -185,4 +194,32 @@ function selectChange(stat_selection) {
       stat: window.current_stat,
     });
   }
+}
+
+function sliderChange(new_days){
+    document.getElementById('chosen-day-range').innerHTML = new_days + ' days';
+    window.days = new_days;    
+    if (window.current_stat != null) {
+      socket.emit("get_stat", {
+        user: window.current_user,
+        stat: window.current_stat,
+      });
+    }
+}
+
+function dropdownServer(){
+  document.getElementsByName("stats")[0].options[1].textContent = "Total Mob Kills";
+  document.getElementsByName("stats")[0].options[2].textContent = "Total Player Kills";
+  document.getElementsByName("stats")[0].options[3].textContent = "Total Deaths";
+  document.getElementsByName("stats")[0].options[4].textContent = "Unique Players Online";
+  let hidden = document.getElementById("final").getAttribute("hidden");
+  document.getElementById("final").setAttribute("hidden", "hidden");
+}
+
+function dropdownPlayer(){
+  document.getElementsByName("stats")[0].options[1].textContent = "Mob Kills";
+  document.getElementsByName("stats")[0].options[2].textContent = "Player Kills";
+  document.getElementsByName("stats")[0].options[3].textContent = "Deaths";
+  document.getElementsByName("stats")[0].options[4].textContent = "Total Time Played";
+  document.getElementById("final").removeAttribute("hidden");
 }

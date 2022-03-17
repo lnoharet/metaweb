@@ -12,8 +12,8 @@ function render_heatmap(){
     console.log("rendering heatmap");
     // set the dimensions and margins of the graph
 
-    var margin =  {top: 0, right: 0, bottom: 0, left: 0},
-    width = 600*96/64;
+    //var margin =  {top: 0, right: 0, bottom: 0, left: 0},
+    width = 900;
     height = 600;
 
 
@@ -21,10 +21,10 @@ function render_heatmap(){
     const svg = d3.select("#heatmap")
     .append("svg")
     .attr("id", "heatmap-svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width)
+    .attr("height", height)
     .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`)
+    //.attr("transform", `translate(${margin.left}, ${margin.top})`)
 
     //Read the data
     //d3.csv("https://raw.githubusercontent.com/glas444/data/main/heatmap_data3.csv").then(function(data) {
@@ -74,6 +74,7 @@ function render_heatmap(){
         .domain(myGroups)
         //.padding(0.05);
 
+
     // Build Y scales and axis:
     const y = d3.scaleBand()
         .range([ height, 0 ])
@@ -95,13 +96,13 @@ function render_heatmap(){
     const tooltip = d3.select("#heatmap")
         .append("div")
         .style("opacity", 1)
-        .style("width", width)
+        .style("width", "800px")
         .style("height", "0px")
         .style("background-color", "#292929")
         .style("color", "white")
         .style("padding-left", "10px")
         .style("font-family", 'Montserrat')
-        .style("font-size", '14px');   
+        .style("font-size", '1rem');   
 
     // Three function that change the tooltip when user hover / move / leave a cell
     const mouseover = function(event,d) {
@@ -113,9 +114,9 @@ function render_heatmap(){
     }
     const mousemove = function(event,d) {
         tooltip
-        .html("Location <br>"+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>Players: "+ d.names.join(', '))
-        .style("left", (event.x)/2 + "px")
-        .style("top", (event.y)/2 + "px")
+        .html("Location <br>"+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>These players have visited lately: "+ d.names.join(', '))
+
+        .style("position", "fixed")
     }
     const mouseleave = function(event,d) {
         tooltip
@@ -135,14 +136,71 @@ function render_heatmap(){
         //.attr("ry", 4)
         .attr("width", x.bandwidth() )
         .attr("height", y.bandwidth() )
-        .style("fill", function(d) { return (myColor(summa(d.value)) === "#000004" ? "none" : myColor(summa(d.value)))} )
+        .style("fill", function(d) { return (myColor(summa(d.value)) === "#000004" ? "rgba(0,0,0,0)" : myColor(summa(d.value)))} )
         .style("stroke-width", 4)
         .style("stroke", "none")
         .style("opacity", square_opacity)
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave)
+      
+        
+        //scale on the side
 
+        function drawScale(id, interpolator) {
+        
+            var data = Array.from(Array(100).keys());
+        
+            var cScale = d3.scaleSequential()
+                .interpolator(d3.interpolateInferno)
+                .domain([max_val,0]);
+        
+            var yScale = d3.scaleLinear()
+                .domain([100,0])
+                .range([-5,height-9]);
+            
+            var yAxScale = d3.scaleLinear()
+                .domain([100,0])
+                .range([0,height-15]);
+        
+            var u = d3.select("#" + id)
+                .selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("y", (d) => Math.floor(yScale(d)))
+                .attr("x", 0)
+                .attr("width", 20)
+                .attr("height", (d) => {
+    
+                    return Math.floor(yScale(d)) - Math.floor(yScale(d+1)-3);
+                    })
+                .attr("fill", (d) => cScale(100-d))
+                
+        
+            var yAxis = d3.axisRight(yAxScale);
+        
+            var svg = d3.select("#"+id);
+        
+            svg.append("g")
+            .attr("class", "y axis")
+            .attr("color", "grey")
+            .attr("transform", "translate(22,12)")
+            .call(yAxis)
+            
+            svg.append("text")
+            .attr("class", "legendTitle")
+            .attr("x", 250)
+            .attr("y", -55)
+            .style("text-anchor", "left")
+            .attr("transform", "rotate(90)")
+            .text("Player Activity ")
+            .style('fill', 'grey');
+            
+        }
+    
+        drawScale("seq1", d3.interpolate(d3.interpolateInferno));
     })
+
    
 }

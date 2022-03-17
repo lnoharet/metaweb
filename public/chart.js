@@ -11,7 +11,7 @@ function renderChart(data, label, date) {
   .attr('cy', y_value)
   .attr('r', r_value)
   .attr('stroke', 'none')
-  .attr('fill', "#B2085C") 
+  .attr('fill', "#292929") 
   : " ";
 
     return svg;
@@ -26,7 +26,7 @@ function renderChart(data, label, date) {
     .attr("height", h)
     .style("overflow", "visible")
     .style("padding-top", "40px")
-    .style("margin-left", "60px")
+    .style("margin-left", "80px")
     .attr("id", "chart");
 
  
@@ -46,22 +46,22 @@ function renderChart(data, label, date) {
   .style("font-size", '14px') 
   : " ";
 
-
-
   const xScale = d3
     .scaleBand()
     .domain(data.map((val, i) => i))
     .range([0, w])
     .padding(0.1);
 
+  tickLabels2 = []
   const yScale = d3.scaleLinear().domain([0, data_max]).range([h, 0]);
+  tickLabels.forEach(function(item, i) { i % 2 == 0 ? tickLabels2.push(tickLabels[i]) :tickLabels2.push(" ") } );
 
-  const xAxis = d3.axisBottom(xScale).ticks(data.length).tickFormat(function(d,i){ return tickLabels[i] });
+  const xAxis = d3.axisBottom(xScale).ticks(tickLabels.length).tickFormat(function(d,i){ return (tickLabels.length < 15 ? tickLabels[i] : tickLabels2[i])})
 
 
   const yAxis = d3.axisLeft(yScale).ticks(7);
 
-  const tooltip = d3.select("body")
+  const tooltip = d3.select("#d3-container")
         .append("div")
         .attr("class","d3-tooltip")
         .style("position", "absolute")
@@ -74,6 +74,7 @@ function renderChart(data, label, date) {
         .style("font-family", 'Montserrat')
         .style("font-size", '12px')
         .text("a simple tooltip");
+
 
   svg.append("g").call(xAxis).attr("transform", `translate(0, ${h})`).style("font-family", 'Montserrat');
 
@@ -92,14 +93,14 @@ function renderChart(data, label, date) {
 
   svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -50)
+      .attr("y", -60)
       .attr("x",0 - (h / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .text(label)
       .style("fill", "#fff")
       .style("font-family", 'Montserrat')
-      .style("font-size", '14px');     
+      .style("font-size", '1em');     
 
   svg
     .selectAll(".bar")
@@ -121,5 +122,4 @@ function renderChart(data, label, date) {
       .on("mouseout", function() {
       tooltip.html(``).style("visibility", "hidden");
     });
-
 }
