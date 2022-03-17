@@ -1,7 +1,6 @@
 function renderChart(data, label, date) {
   tickLabels = date;
-  
-  //const data = filtered_data; //[40, 39, 90, 100, 20];
+
   d3.select("#chart").remove();
   const isAllZero = data.every(item => item === 0);
   isAllZero ? data_max = 10 : data_max = Math.max(...data);

@@ -6,52 +6,62 @@ window.current_player_name = null; // for heatmap (name)
 
 window.last_x_days = 7 * 24 * 60 * 60 * 1000; // ms
 window.current_stat = null;
+
 window.days = 7;
-//var filtered_data = [];
 
-var users; // list of all users
+window.users; // list of all users
+var sessions;
+window.users_with_last_seen = [];
 
+
+render_heatmap();
 
 // TODO: Add info about if the user is online or not and last seen online.
-render_heatmap();
-socket.on("get_users_response", function (arg) {
-  console.log("get_users_response");
-  users = arg;
-
-  users.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
-
-  displayFriendsList(users);
-
-  var players = [];
-  for (let i = 0; i < users.length; i++) {
-    players.push(users[i].name);
+socket.on("last_seen_online", function(arg){
+  sessions = get_last_seen_online(users, arg);
+  for(let i = 0; i < users.length; i++){
+    users_with_last_seen.push({uuid : users[i].uuid, name : users[i].name, last_seen_online : sessions.get(users[i].uuid)});
   }
-  //console.log(players);
+  users_with_last_seen.sort((a, b) => (a.last_seen_online < b.last_seen_online) ? 1 : -1);
+  displayUserList(users_with_last_seen);
+});
+
+socket.on("get_users_response", function (arg) {
+  window.users = arg;
+  create_userlist();
+});
+//  users.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
+
+function create_userlist(){
+  var players = [];
+  for (let i = 0; i < window.users.length; i++) {
+    players.push(window.users[i].name);
+  }
+
   const searchBar = document.getElementById("searchBar");
   searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
-
     const filteredPlayers = players.filter(player => {
       return player.toLowerCase().includes(searchString);
     });
 
+
     const filtered_users = users.filter((list => list.uuid !== current_user)).filter(user => { return user.name.toLowerCase().includes(searchString) });
-    //console.log(filtered_users);
 
     if (filtered_users.length == 0 && searchString == "") {
-      displayFriendsList(users);
+      displayUserList(window.users);
     }
     else if (filtered_users.length == 0) {
-      displayFriendsList(filtered_users);
+      displayUserList(filtered_users);
     }
     else {
-      displayFriendsList(filtered_users);
+      displayUserList(filtered_users);
     }
-
   })
-})
+}
 
-function displayFriendsList(users) {
+
+function displayUserList(usrs) {
 
   if (document.getElementsByClassName("player-container")) {
     const elements = document.getElementsByClassName("player-container");
@@ -59,17 +69,17 @@ function displayFriendsList(users) {
       elements[0].parentNode.removeChild(elements[0]);
     }
   }
-  for (let i = 0; i < users.length; i++) {
+  for (let i = 0; i < usrs.length; i++) {
 
 
     var playerContainer = document.createElement("li");
     var playerName = document.createElement("div");
 
     playerContainer.className = "player-container";
-    playerContainer.id = users[i].uuid;
-    playerContainer.value = users[i].name;
+    playerContainer.id = usrs[i].uuid;
+    playerContainer.value = usrs[i].name;
 
-    playerName.innerHTML = users[i].name;
+    playerName.innerHTML = usrs[i].name;
     playerName.className = "player-name";
     var parentDiv = document.getElementById("player-list");
     parentDiv.appendChild(playerContainer);
@@ -88,7 +98,6 @@ function displayFriendsList(users) {
         this.className = "player-container-selected";
         dropdownPlayer();
 
-        // TODO: Query current stat for current user. and render heatmap
         if(window.current_stat != null){
           socket.emit("get_stat", {
             user: window.current_user,
@@ -96,8 +105,7 @@ function displayFriendsList(users) {
           });
         }
 
-        chartText.textContent =
-          document.getElementById(this.id).firstChild.innerHTML + " Stats";
+        chartText.textContent = document.getElementById(this.id).firstChild.innerHTML + " Stats";
 
         console.log("set current user to ".concat(window.current_user));
       } else {
@@ -112,18 +120,13 @@ function displayFriendsList(users) {
             stat: window.current_stat,
           });
         }
-
         chartText.textContent = "Server Stats";
         dropdownServer();
-        //TODO: Query server stats
       }
       render_heatmap();
     });
   }
 }
-
-/*------------------------------------------------------------------------------------------------*/
-// Socket communication
 
 socket.on("get_stat_response", function (arg) {
   console.log(arg.result);
@@ -157,32 +160,23 @@ socket.on("get_stat_response", function (arg) {
       case "1":
         // Mob Kills
         renderChart(group_into_dates(data, days, "mob_kills"), "Mobs killed", dateStamps(days));
-
         break;
       case "2":
         // Player Kills
         renderChart(group_into_dates(data, days, "kills"), "Players killed", dateStamps(days));
-        //console.log(stat);
         break;
-
       case "3":
         // Deaths
         renderChart(group_into_dates(data, days, "deaths"), "Player deaths", dateStamps(days));
-
         break;
-
       case "4":
         // Time played
-        console.log(stat);
         renderChart(timePlayed(data, days), "Time played in hours", dateStamps(days));
         break;
-
       case "5":
         // Amount of sessions played
         renderChart(sessionsPlayed(data, days), "Amount of sessions", dateStamps(days));
         break;
-
-
       default:
           break;
     }
@@ -194,7 +188,6 @@ socket.on("get_stat_response", function (arg) {
 // Get Stat selection and query based on choice.
 function selectChange(stat_selection) {
   window.current_stat = stat_selection;
-  console.log(window.current_stat);
   if (stat_selection != 0) {
     socket.emit("get_stat", {
       user: window.current_user,
