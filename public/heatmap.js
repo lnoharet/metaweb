@@ -196,7 +196,13 @@ function render_heatmap(){
             .style("text-anchor", "left")
             .attr("transform", "rotate(90)")
             .text("Player Activity ")
+            .style("font-family", 'Montserrat')
             .style('fill', 'grey');
+
+            d3.select("#seq1")
+                .call( d3.brushY()                     // Add the brush feature using the d3.brush function
+                .extent( [ [0,0], [100,680] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+      )
             
         }
     
