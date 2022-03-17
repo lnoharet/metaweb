@@ -6,9 +6,9 @@ function summa(arr){
     return sum;
 }
 var square_opacity = 0.5;
+var max_val = -1;
 function render_heatmap(){
     d3.select("#heatmap-svg").remove(); // Not good, tar bort charten på sidan också
-    //d3.select("#heatmap-container").remove();
     console.log("rendering heatmap");
     // set the dimensions and margins of the graph
 
@@ -42,7 +42,6 @@ function render_heatmap(){
             }
         }
         // iterate through data to see if filter through vales and create new json object to same values.
-        var max_val = -1;
         for (let i = 0; i<data.length; i++){
             for(let j = 0; j< data[i].names.length; j++){
                 

@@ -94,9 +94,22 @@ function get_unique_players(data, days){
         res.push(unique[i].length);
     }
     return(res)
+}
 
-        
-    
+// returns an array of the last unix time stamp for each player
+function get_last_seen_online(player_list, session_list){
+    var last_seen = new Map();
+    // init values
+    for(let i = 0; i<player_list.length; i++){
+        last_seen.set(player_list[i].uuid, -1);
+    }
+    for(let i = 0; i<session_list.length; i++){
+        if(parseInt(session_list[i].session_end) > last_seen.get(session_list[i].uuid)){
+            // greater value found -> overwrite current value
+            last_seen.set(session_list[i].uuid, parseInt(session_list[i].session_end));
+        }
+    }    
+    return last_seen;
 }
 
 
