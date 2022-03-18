@@ -16,40 +16,38 @@ window.users_with_last_seen = [];
 
 render_heatmap();
 
-// TODO: Add info about if the user is online or not and last seen online.
+// sorts the user list on the last seen online
 socket.on("last_seen_online", function(arg){
   sessions = get_last_seen_online(users, arg);
   for(let i = 0; i < users.length; i++){
     users_with_last_seen.push({uuid : users[i].uuid, name : users[i].name, last_seen_online : sessions.get(users[i].uuid)});
   }
   users_with_last_seen.sort((a, b) => (a.last_seen_online < b.last_seen_online) ? 1 : -1);
+  create_userlist();
   displayUserList(users_with_last_seen);
 });
 
 socket.on("get_users_response", function (arg) {
   window.users = arg;
-  create_userlist();
 });
+
 //  users.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : -1);
 
 function create_userlist(){
   var players = [];
-  for (let i = 0; i < window.users.length; i++) {
-    players.push(window.users[i].name);
+  for (let i = 0; i < users_with_last_seen.length; i++) {
+    players.push(users_with_last_seen[i].name);
   }
-
   const searchBar = document.getElementById("searchBar");
   searchBar.addEventListener('keyup', (e) => {
     const searchString = e.target.value.toLowerCase();
     const filteredPlayers = players.filter(player => {
       return player.toLowerCase().includes(searchString);
     });
-
-
-    const filtered_users = users.filter((list => list.uuid !== current_user)).filter(user => { return user.name.toLowerCase().includes(searchString) });
+    const filtered_users = users_with_last_seen.filter((list => list.uuid !== current_user)).filter(user => { return user.name.toLowerCase().includes(searchString) });
 
     if (filtered_users.length == 0 && searchString == "") {
-      displayUserList(window.users);
+      displayUserList(users_with_last_seen);
     }
     else if (filtered_users.length == 0) {
       displayUserList(filtered_users);
@@ -70,10 +68,10 @@ function displayUserList(usrs) {
     }
   }
   for (let i = 0; i < usrs.length; i++) {
-
-
     var playerContainer = document.createElement("li");
     var playerName = document.createElement("div");
+    var playerLastSeen = document.createElement("div");
+
 
     playerContainer.className = "player-container";
     playerContainer.id = usrs[i].uuid;
@@ -81,9 +79,17 @@ function displayUserList(usrs) {
 
     playerName.innerHTML = usrs[i].name;
     playerName.className = "player-name";
+    
+    playerLastSeen.innerHTML = unix_to_days_or_hours(usrs[i].last_seen_online) ;
+    playerLastSeen.className = "player-lastseen";
+
+
     var parentDiv = document.getElementById("player-list");
     parentDiv.appendChild(playerContainer);
     playerContainer.appendChild(playerName);
+    playerContainer.appendChild(playerLastSeen);
+
+
     playerContainer.addEventListener("click", function () {
       var chartText = document.getElementById("adaptiveText");
       if (this.id != window.current_user) {
@@ -104,10 +110,7 @@ function displayUserList(usrs) {
             stat: window.current_stat,
           });
         }
-
         chartText.textContent = document.getElementById(this.id).firstChild.innerHTML + " Stats";
-
-        console.log("set current user to ".concat(window.current_user));
       } else {
         this.className = "player-container";
         window.current_user = null;

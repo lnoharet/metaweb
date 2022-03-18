@@ -110,4 +110,16 @@ function get_last_seen_online(player_list, session_list){
     return last_seen;
 }
 
+function unix_to_days_or_hours(unix_timestamp){
+    var today = Date.now();
+    var days = Math.floor((today - unix_timestamp)/ (1000*60*60*24));
+    if (days == 0){
+        // return hours 
+        return "online ".concat(Math.floor((today - unix_timestamp)/ (1000*60*60)).toString().concat("h ago"));
+    }
+    else{
+        return "online ".concat(days.toString().concat("d ago"));
+    }
+}
+
 
