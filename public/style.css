@@ -202,7 +202,14 @@ ul{
   list-style-type: none;
   font-family: 'Montserrat', sans-serif;
   padding: 7px;
-
+}
+.player-lastseen{
+  color: rgb(194, 194, 194);
+  font-family: 'Montserrat';
+  margin-top: -20px;
+  font-size: 10px;
+  float : right;
+  text-align: right;
 }
 
 .player-container:hover {
