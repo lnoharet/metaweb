@@ -192,6 +192,28 @@ function render_heatmap(){
                 .style("font-family", 'Montserrat')
                 .style('fill', 'grey');
 
+                svg.append("text")
+                .attr("id", "upperbound-txt")
+                .attr("x", 1)
+                .attr("y", 15)
+                .text("")
+                .style("font-family", 'Montserrat')
+                .style('font-size', '15px')
+                .style('fill', 'grey')
+                .style('textAlign', "center")
+                ;
+    
+                svg.append("text")
+                .attr("id", "lowerbound-txt")
+                .attr("x", 1)
+                .attr("y", 15)
+                .text("")
+                .style("font-family", 'Montserrat')
+                .style('font-size', '15px')
+                .style('fill', 'grey')
+                .style('textAlign', "center")
+                ;
+            
                 svg.call(
                     d3.brushY()                   
                     .extent( [ [0,0], [20,height] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
@@ -206,10 +228,69 @@ function render_heatmap(){
 
             var upper_bound = 100 - sel[0] / 6;
             var lower_bound = 100 - sel[1] / 6;
+            
+            // displays values on brush
+            var upper = d3.select("#upperbound-txt")
+            upper.text(Math.round(upper_bound))
+            
+            var lower = d3.select("#lowerbound-txt")
+            lower.text(Math.round(lower_bound))
+
+            // font formatting
+            if(Math.round(lower_bound) == 100){
+                lower.style("font-size", '11px')
+            }
+            else{
+                lower.style("font-size", '15px')
+            }
+
+            //edge case formatting
+            if(Math.round(upper_bound) == 100){
+                upper.style("font-size", '11px')
+                upper.attr('y', sel[0] + 10)
+            }
+            else{
+                upper.style("font-size", '15px')
+            }
+            if(Math.round(lower_bound) == 0){
+                lower.attr('y', sel[1] - 1.5)
+            }
+            if(Math.round(lower_bound) < 10){
+                lower.attr('x', 5)
+            }            
+            else{
+                lower.attr('x', 1.5)
+            }
+            if(Math.round(upper_bound) < 10){
+                upper.attr('x', 5)
+            }            
+            else{
+                upper.attr('x', 1.5)
+            }
+            
+            // position formatting
+            if(Math.round(upper_bound) - Math.round(lower_bound) < 5){
+                // have numbers on the outside of brush
+                if(Math.round(upper_bound) != 100){
+                    upper.attr("y", sel[0] - 1.5);
+                }
+                if(Math.round(lower_bound) != 0){
+                    lower.attr("y", sel[1] + 12.5);
+                }
+            }
+            else{
+                // have numbers on the inside of brush
+                if(Math.round(upper_bound) != 100){
+                    upper.attr("y", sel[0] + 12.5);
+                }
+                lower.attr("y", sel[1] - 1.5);
+            }
+            if(Math.round(upper_bound) - Math.round(lower_bound) == 0){
+                lower.text("")
+            }
 
             d3.selectAll(".heatmap-square")
             .style("fill", function(d) { return ( summa(d.value) <= upper_bound && summa(d.value) > lower_bound ? myColor(summa(d.value)) : "rgba(0,0,0,0)" )} );
-
         }
 
     })
