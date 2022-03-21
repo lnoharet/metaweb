@@ -16,6 +16,13 @@ function render_heatmap(){
     width = 900;
     height = 600;
 
+    let transform;
+
+    const zoom = d3.zoom().on("zoom", e => {
+          svg.attr("transform", (transform = e.transform));
+        });
+    
+
 
     // append the svg object to the body of the page
     const svg = d3.select("#heatmap")
@@ -23,6 +30,7 @@ function render_heatmap(){
     .attr("id", "heatmap-svg")
     .attr("width", width)
     .attr("height", height)
+    .call(zoom)
     .append("g")
     //.attr("transform", `translate(${margin.left}, ${margin.top})`)
 
@@ -122,12 +130,7 @@ function render_heatmap(){
             .style("opacity", square_opacity)
         }
 
-        let transform;
-
-        const zoom = d3.zoom().on("zoom", e => {
-          svg.attr("transform", (transform = e.transform));
-        });
-    
+        
 
         // add the squares
         svg.selectAll()
@@ -145,7 +148,7 @@ function render_heatmap(){
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
-            .call(zoom)
+            
         
             
             //scale on the side
