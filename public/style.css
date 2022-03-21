@@ -158,9 +158,13 @@ ul{
 
 } */
 
+.img-head-world {
+  height: 3em;
+}
 .img-head {
   height: 3em;
 }
+
 
 .hr-sidebar {
   border-top: 2px solid #3D3B3B;

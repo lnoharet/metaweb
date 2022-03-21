@@ -125,7 +125,7 @@ function displayUserList(usrs) {
           });
         }
         chartText.textContent = "Server Stats";
-        document.getElementById("stats-img").src = "resources/world.png";
+        document.getElementById("stats-img").src = "resources/zombie.png";
         dropdownServer();
       }
       render_heatmap();
