@@ -9,7 +9,7 @@ body {
 }
 
 .heatmap-container {
-  background-image: url("./resources/map.png");
+  /* background-image: url("./resources/map.png"); */
   width: 900px;
   height: 600px;
   /* //overflow: scroll; */

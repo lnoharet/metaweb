@@ -23,7 +23,6 @@ function render_heatmap(){
         });
     
 
-
     // append the svg object to the body of the page
     const svg = d3.select("#heatmap")
     .append("svg")
@@ -31,6 +30,7 @@ function render_heatmap(){
     .attr("width", width)
     .attr("height", height)
     .call(zoom)
+    //.style("background-image", "url(./resources/map.png)")
     .append("g")
     //.attr("transform", `translate(${margin.left}, ${margin.top})`)
 
@@ -130,7 +130,10 @@ function render_heatmap(){
             .style("opacity", square_opacity)
         }
 
-        
+        svg.append("image")
+            .attr("width",  width)
+            .attr("height", height)
+            .attr("xlink:href", "./resources/map.png");
 
         // add the squares
         svg.selectAll()
