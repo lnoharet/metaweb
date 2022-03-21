@@ -108,7 +108,7 @@ p {
 }
 
 .reference-container {
-    margin-top: 150px;
+    margin-top: 10px;
     height: 200px;
     width: 100%;
 
@@ -118,4 +118,22 @@ p {
 }
 .references {
     font-size:10px;
+}
+.git-button {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    float:right;
+    object-fit: fill;
+    background-color: white;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.git-button:hover {
+    cursor:pointer;
+}
+.button-wrapper {
+    text-align:right;
+    right: 20px;
 }
