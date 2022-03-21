@@ -177,11 +177,11 @@ function render_heatmap(){
             
                 var yScale = d3.scaleLinear()
                     .domain([100,0])
-                    .range([-5,height-9]);
+                    .range([5,height+2]);
                 
                 var yAxScale = d3.scaleLinear()
                     .domain([100,0])
-                    .range([0,height-15]);
+                    .range([0-2,height-3]);
             
                 var u = d3.select("#" + id)
                     .selectAll("rect")
