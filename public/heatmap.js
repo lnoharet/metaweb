@@ -189,7 +189,8 @@ function render_heatmap(){
             
                 svg.append("g")
                 .attr("class", "y axis")
-                .attr("color", "grey")
+                .attr("color", "white")
+                .style("font-family", 'Montserrat')
                 .attr("transform", "translate(22,12)")
                 .call(yAxis)
                 
@@ -201,7 +202,7 @@ function render_heatmap(){
                 .attr("transform", "rotate(90)")
                 .text("Player Activity ")
                 .style("font-family", 'Montserrat')
-                .style('fill', 'grey');
+                .style('fill', 'white');
 
                 svg.append("text")
                 .attr("id", "upperbound-txt")
@@ -210,7 +211,7 @@ function render_heatmap(){
                 .text("")
                 .style("font-family", 'Montserrat')
                 .style('font-size', '15px')
-                .style('fill', 'grey')
+                .style('fill', 'white')
                 .style('textAlign', "center")
                 ;
     
@@ -221,7 +222,7 @@ function render_heatmap(){
                 .text("")
                 .style("font-family", 'Montserrat')
                 .style('font-size', '15px')
-                .style('fill', 'grey')
+                .style('fill', 'white')
                 .style('textAlign', "center")
                 ;
             
