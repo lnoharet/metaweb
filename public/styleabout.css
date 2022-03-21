@@ -120,20 +120,18 @@ p {
     font-size:10px;
 }
 .git-button {
-    height: 45px;
-    width: 45px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
     float:right;
-    object-fit: fill;
-    background-color: white;
-    margin-right: 15px;
-    display: flex;
-    flex-direction: column;
+
+    margin-right: 1%;
+    display:flex;
+    align-items: stretch;
 }
 .git-button:hover {
     cursor:pointer;
 }
 .button-wrapper {
     text-align:right;
-    right: 20px;
 }
