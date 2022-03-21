@@ -231,7 +231,7 @@ function render_heatmap(){
             
                 svg.call(
                     d3.brushY()                   
-                    .extent( [ [0,0], [20,height] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+                    .extent( [ [0,10], [20,height+10] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
                     .on("brush", updateChartBrush) 
                 )
         }
@@ -241,8 +241,8 @@ function render_heatmap(){
 
             const sel = d3.brushSelection(this);
 
-            var upper_bound = 100 - sel[0] / 6;
-            var lower_bound = 100 - sel[1] / 6;
+            var upper_bound = 100+2 - sel[0] / 6;
+            var lower_bound = 100+2 - sel[1] / 6;
             
             // displays values on brush
             var upper = d3.select("#upperbound-txt")
