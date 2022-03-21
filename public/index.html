@@ -26,59 +26,62 @@
             <!-- <a href="about.html" class="demo-btn">Demo</a> -->
             <a href="about.html" class="home-btn">About us</a>
         </div>
-        
+
         <!-- <button id="about" onClick="window.location.href='about.html';">About us</button> -->
-    <div class="flex-view">
-        <ul>
-            <div class="sidebar-comp">
-                <div class="hr-sidebar"></div>
+        <div class="flex-view">
+            <ul>
+                <div class="sidebar-comp">
+                    <div class="hr-sidebar"></div>
 
-                <div class="head-group">
-                    <img class="img-head" src="resources/head.png"></img>
-                    <h2 class="h2-players">Players</h2>
-                    <div id="searchWrapper">
-                        <input class="searchBar" type="text" name="searchBar" id="searchBar"
-                            placeholder="Player Search" />
+                    <div class="head-group">
+                        <img class="img-head" src="resources/head.png"></img>
+                        <h2 class="h2-players">Players</h2>
+                        <div id="searchWrapper">
+                            <input class="searchBar" type="text" name="searchBar" id="searchBar"
+                                placeholder="Player Search" />
+                        </div>
+                    </div>
+
+                    <div class="player-list-container" id="player-list">
+                        <!--player divs will be added here-->
+                    </div>
+
+                    <div class="hr-sidebar"></div>
+
+
+                    <div class="head-group-skull">
+                        <img id="stats-img" class="img-head" src="resources/world.png"></img>
+                        <h2 class="h2-chartText" id="adaptiveText">Server Stats</h2>
+                    </div>
+
+                    <div class="sidebar-chart">
+                        <div class="stat_select_dropdown" id="stat_select_btn">
+                            <select name="stats" onChange=selectChange(this.value) value="0">
+                                <option value="0" hidden>Select stat:</option>
+                                <option value="1">Total Mob Kills</option>
+                                <option value="2">Total Player Kills</option>
+                                <option value="3">Total Deaths</option>
+                                <option value="4">Unique Players Online</option>
+                                <option value="5" id="final" hidden>Amount of sessions played</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="d3-container"></div>
+                    </div>
+                    <div class="slidecontainer" id="slidecontainer" hidden>
+                        <input type="range" min="0" max="30" value="7" class="slider" id="daysRange"
+                            onChange=sliderChange(this.value) />
+                        <label id="chosen-day-range">7 days</label>
                     </div>
                 </div>
+            </ul>
+            <div id="heatmap" class="heatmap-container"></div>
+            <svg id="seq1" width="100" height="600">
+            </svg>
+            
+        </div>
 
-                <div class="player-list-container" id="player-list">
-                    <!--player divs will be added here-->
-                </div>
-
-                <div class="hr-sidebar"></div>
-
-
-                <div class="head-group-skull">
-                    <img class="img-head" src="resources/skull.png"></img>
-                    <h2 class="h2-chartText" id="adaptiveText">Server Stats</h2>
-                </div>
-
-                <div class="sidebar-chart">
-                    <div class="stat_select_dropdown" id="stat_select_btn">
-                        <select name="stats" onChange=selectChange(this.value) value="0">
-                            <option value="0" hidden>Select stat:</option>
-                            <option value="1">Total Mob Kills</option>
-                            <option value="2">Total Player Kills</option>
-                            <option value="3">Total Deaths</option>
-                            <option value="4">Unique Players Online</option>
-                            <option value="5" id="final" hidden>Amount of sessions played</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <div id="d3-container"></div>
-                </div>
-                <div class="slidecontainer" id="slidecontainer" hidden>
-                    <input type="range" min="0" max="30" value="7" class="slider" id="daysRange"
-                        onChange="document.getElementById('chosen-day-range').innerHTML = this.value + ' days'" />
-                    <label id="chosen-day-range">7 days</label>
-                </div>
-            </div>
-        </ul>
-        <div id="heatmap" class ="heatmap-container"></div>
-        <svg id="seq1" width="100" height="680" ></svg>
-    </div>
 
     </div>
     <script src="App.js"> </script>

@@ -1,10 +1,11 @@
 function renderChart(data, label, date) {
   tickLabels = date;
-  
-  //const data = filtered_data; //[40, 39, 90, 100, 20];
+
   d3.select("#chart").remove();
   const isAllZero = data.every(item => item === 0);
+  const isAllLow = data.every(item => item < 10);
   isAllZero ? data_max = 10 : data_max = Math.max(...data);
+  isAllLow ? data_max = 10 : data_max = Math.max(...data);
 
   function circle_pattern(x_value, y_value, r_value) {
     isAllZero ?  svg.append('circle')
@@ -27,7 +28,7 @@ function renderChart(data, label, date) {
     .attr("height", h)
     .style("overflow", "visible")
     .style("padding-top", "40px")
-    .style("margin-left", "60px")
+    .style("margin-left", "80px")
     .attr("id", "chart");
 
  
@@ -56,7 +57,6 @@ function renderChart(data, label, date) {
   tickLabels2 = []
   const yScale = d3.scaleLinear().domain([0, data_max]).range([h, 0]);
   tickLabels.forEach(function(item, i) { i % 2 == 0 ? tickLabels2.push(tickLabels[i]) :tickLabels2.push(" ") } );
-  console.log(tickLabels2)
 
   const xAxis = d3.axisBottom(xScale).ticks(tickLabels.length).tickFormat(function(d,i){ return (tickLabels.length < 15 ? tickLabels[i] : tickLabels2[i])})
 
@@ -95,14 +95,14 @@ function renderChart(data, label, date) {
 
   svg.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -50)
+      .attr("y", -60)
       .attr("x",0 - (h / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .text(label)
       .style("fill", "#fff")
       .style("font-family", 'Montserrat')
-      .style("font-size", '14px');     
+      .style("font-size", '1em');     
 
   svg
     .selectAll(".bar")

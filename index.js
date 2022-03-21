@@ -50,13 +50,19 @@ function unix_to_s_m_h(time) {
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-
   socket.on("get_users", function () {
+
     console.log("fetching user list");
+
     const sql_query = "select uuid, name from plan_users";
     db.query(sql_query, function (err, res) {
       if (err) throw err;
-      io.sockets.emit("get_users_response", res);
+      socket.emit("get_users_response", res);
+    });
+    const sql_query2 = "select uuid, session_end from plan_sessions";
+    db.query(sql_query2, function (err, res) {
+      if (err) throw err;
+      socket.emit("last_seen_online", res);
     });
   });
 
@@ -79,10 +85,11 @@ io.on("connection", (socket) => {
           // Total mob kills 
           var sql_query = (SQL`select session_end, mob_kills from plan_sessions`);
           console.log(sql_query);
+          console.log("it works")
           db.query(sql_query, function (err, res) {
             if (err) throw err;
             var result = res;
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
           break;
         case "2":
@@ -92,7 +99,7 @@ io.on("connection", (socket) => {
           db.query(sql_query, function (err, res) {
             if (err) throw err;
             var result = res;
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
           break;
         case "3":
@@ -102,7 +109,7 @@ io.on("connection", (socket) => {
           db.query(sql_query, function (err, res) {
             if (err) throw err;
             var result = res;
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
           break;
         case "4":
@@ -111,7 +118,7 @@ io.on("connection", (socket) => {
           db.query(sql_query, function (err, res) {
             if (err) throw err;
             var result = res;
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
           break;
       }
@@ -127,7 +134,7 @@ io.on("connection", (socket) => {
           db.query(sql_query, function (err, res) {
             if (err) throw err;
             var result = res;
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
           break;
         case "2":
@@ -137,7 +144,7 @@ io.on("connection", (socket) => {
           db.query(sql_query, function (err, res) {
             if (err) throw err;
             var result = res;
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
   
           break;
@@ -148,7 +155,7 @@ io.on("connection", (socket) => {
           db.query(sql_query, function (err, res) {
             if (err) throw err;
             var result = res;
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
           break;
         case "4":
@@ -161,7 +168,7 @@ io.on("connection", (socket) => {
             // Calculate total time played
             var result = res;
   
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
   
           break;
@@ -172,7 +179,7 @@ io.on("connection", (socket) => {
           db.query(sql_query, function (err, res) {
             var result = res;
             if (err) throw err;
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
           break;
         case "6":
@@ -192,7 +199,7 @@ io.on("connection", (socket) => {
               // adds session_lengths to an array. each session_length is [seconds, minutes, hours] format.
               result[i] = session_length;
             }
-            io.sockets.emit("get_stat_response", { result, stat });
+            socket.emit("get_stat_response", { result, stat });
           });
           break;
   
@@ -204,16 +211,14 @@ io.on("connection", (socket) => {
           db.query(sql_query, function(err, res){
             if (err) throw err;
             var result = res;
-            io.sockets.emit("get_stat_response", {result, stat});
+            socket.emit("get_stat_response", {result, stat});
           });
           break;
         default:
           console.log("def");
       }
 
-    }
-    // SQL queries depending on selected stat
-    
+    }    
   });
 });
 
