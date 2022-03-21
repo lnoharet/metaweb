@@ -108,3 +108,31 @@ p {
     border-radius: 100%;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, .3);
 }
+
+.reference-container {
+    margin-top: 10px;
+    height: 200px;
+    width: 100%;
+
+}
+.h2-references {
+    font-size:12px;
+}
+.references {
+    font-size:10px;
+}
+.git-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    float:right;
+    margin-right: 1%;
+    display:flex;
+    align-items: stretch;
+}
+.git-button:hover {
+    cursor:pointer;
+}
+.button-wrapper {
+    text-align:right;
+}

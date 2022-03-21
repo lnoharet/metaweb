@@ -20,6 +20,12 @@ function render_heatmap(){
     width = 900;
     height = 600;
 
+    let transform;
+
+    const zoom = d3.zoom().on("zoom", e => {
+          svg.attr("transform", (transform = e.transform));
+        });
+    
 
     // append the svg object to the body of the page
     const svg = d3.select("#heatmap")
@@ -27,6 +33,8 @@ function render_heatmap(){
     .attr("id", "heatmap-svg")
     .attr("width", width)
     .attr("height", height)
+    .call(zoom)
+    //.style("background-image", "url(./resources/map.png)")
     .append("g")
     //.attr("transform", `translate(${margin.left}, ${margin.top})`)
 
@@ -121,6 +129,11 @@ function render_heatmap(){
             .style("opacity", square_opacity)
         }
 
+        svg.append("image")
+            .attr("width",  width)
+            .attr("height", height)
+            .attr("xlink:href", "./resources/map.png");
+
         // add the squares
         svg.selectAll()
             .data(data, function(d) {return d.coords[0]+':'+d.coords[1];})
@@ -137,6 +150,7 @@ function render_heatmap(){
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
+            
         
         
         function eval_heatmap_value(val, date){
@@ -190,7 +204,8 @@ function render_heatmap(){
             
                 svg.append("g")
                 .attr("class", "y axis")
-                .attr("color", "grey")
+                .attr("color", "white")
+                .style("font-family", 'Montserrat')
                 .attr("transform", "translate(22,12)")
                 .call(yAxis)
                 
@@ -202,7 +217,7 @@ function render_heatmap(){
                 .attr("transform", "rotate(90)")
                 .text("Player Activity ")
                 .style("font-family", 'Montserrat')
-                .style('fill', 'grey');
+                .style('fill', 'white');
 
                 svg.append("text")
                 .attr("id", "upperbound-txt")
@@ -211,7 +226,7 @@ function render_heatmap(){
                 .text("")
                 .style("font-family", 'Montserrat')
                 .style('font-size', '15px')
-                .style('fill', 'grey')
+                .style('fill', 'white')
                 .style('textAlign', "center")
                 ;
     
@@ -222,13 +237,13 @@ function render_heatmap(){
                 .text("")
                 .style("font-family", 'Montserrat')
                 .style('font-size', '15px')
-                .style('fill', 'grey')
+                .style('fill', 'white')
                 .style('textAlign', "center")
                 ;
             
                 svg.call(
                     d3.brushY()                   
-                    .extent( [ [0,0], [20,height] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+                    .extent( [ [0,10], [20,height+10] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
                     .on("brush", updateChartBrush) 
                 )
         }

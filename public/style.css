@@ -9,9 +9,11 @@ body {
 }
 
 .heatmap-container {
-  background-image: url("./resources/map.png");
+  /* background-image: url("./resources/map.png"); */
   width: 900px;
   height: 600px;
+  margin-top: 10px;
+  margin-left: 10px;
   /* //overflow: scroll; */
 }
 
@@ -158,9 +160,13 @@ ul{
 
 } */
 
+.img-head-world {
+  height: 3em;
+}
 .img-head {
   height: 3em;
 }
+
 
 .hr-sidebar {
   border-top: 2px solid #3D3B3B;
@@ -202,7 +208,10 @@ ul{
   list-style-type: none;
   font-family: 'Montserrat', sans-serif;
   padding: 7px;
+  position:static;
 }
+
+
 .player-lastseen{
   color: rgb(194, 194, 194);
   font-family: 'Montserrat';
@@ -225,6 +234,19 @@ ul{
   font-family: 'Montserrat', sans-serif;
   padding: 7px;
   cursor: pointer;
+  display:flex;
+  flex-direction: row;
+  justify-content:space-between;
+  
+}
+.player-container-selected:hover {
+  background-color: #b2447b;
+}
+.player-container-selected:hover::after {
+  content:"\274c";
+  line-height : 50px;
+  font-size:30px;
+  z-index: 1; 
 
 }
 
