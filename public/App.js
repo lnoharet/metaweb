@@ -13,7 +13,6 @@ window.users; // list of all users
 var sessions;
 window.users_with_last_seen = [];
 
-
 render_heatmap();
 
 // sorts the user list on the last seen online
