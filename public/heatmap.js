@@ -1,3 +1,7 @@
+var square_opacity = 0.5;
+var max_val;
+var last_lower_bound = 0;
+var last_upper_bound = 100;
 function summa(arr){
     var sum = 0
     for(let i = 0; i<arr.length; i++){
@@ -5,9 +9,9 @@ function summa(arr){
     }
     return sum;
 }
-var square_opacity = 0.5;
-var max_val = -1;
+
 function render_heatmap(){
+
     d3.select("#heatmap-svg").remove();
     console.log("rendering heatmap");
     // set the dimensions and margins of the graph
@@ -36,9 +40,9 @@ function render_heatmap(){
 
     //Read the data
     //d3.csv("https://raw.githubusercontent.com/glas444/data/main/heatmap_data3.csv").then(function(data) {
-    //d3.json("https://raw.githubusercontent.com/glas444/data/main/countries.csv").then(function(data) {  
-    d3.json("https://raw.githubusercontent.com/glas444/data/main/data.json").then(function(data) {  
-    // Labels of row and columns -> unique identifier of the column called 'group' and 'variable'
+    //d3.json("https://raw.githubusercontent.com/glas444/data/main/countries.csv").then(function(data) {
+    d3.json("https://raw.githubusercontent.com/glas444/data/main/data.json").then(function(data) { 
+
         if (window.current_player_name != null){
             var new_data_json = []
             var w = 96;
@@ -65,10 +69,7 @@ function render_heatmap(){
             }
             data = new_data_json;
         }
-        else{
-            max_val = 100;
-        }
-
+        max_val = 100;
         const myGroups = Array.from(new Set(data.map(d => d.coords[0])))
         const myVars = Array.from(new Set(data.map(d => d.coords[1])))
         //const myValue = Array.from(new Set(data.map(d => d.value)))
@@ -78,14 +79,12 @@ function render_heatmap(){
         const x = d3.scaleBand()
             .range([ 0, width ])
             .domain(myGroups)
-            //.padding(0.05);
 
 
         // Build Y scales and axis:
         const y = d3.scaleBand()
             .range([ height, 0 ])
             .domain(myVars)
-            //.padding(0.05);
 
         // Build color scale
         const myColor = d3.scaleSequential()
@@ -144,7 +143,7 @@ function render_heatmap(){
             .attr("y", function(d) { return y(d.coords[1]) })
             .attr("width", x.bandwidth() )
             .attr("height", y.bandwidth() )
-            .style("fill", function(d) { return (myColor(summa(d.value)) === "#000004" ? "rgba(0,0,0,0)" : myColor(summa(d.value)))} )
+            .style("fill", function(d) { return eval_heatmap_value(d.value, 0) })//return eval_heatmap_value(d.value, d.date, d.names)} )
             .style("stroke-width", 4)
             .style("stroke", "none")
             .style("opacity", square_opacity)
@@ -153,7 +152,20 @@ function render_heatmap(){
             .on("mouseleave", mouseleave)
             
         
-            
+        
+        function eval_heatmap_value(val, date){
+            var sum = summa(val); 
+            if(myColor(sum) ==  "#000001"){
+                return "rgba(0,0,0,0)";
+            }
+            if (date+1 <= window.days){
+                if(sum <= last_upper_bound && sum > last_lower_bound){
+                    return myColor(sum);
+                }
+                else{ return "rgba(0,0,0,0)";}
+            }        
+            return "rgba(0,0,0,0)";
+        }
             //scale on the side
         function drawScale(id, interpolator) {
             
@@ -241,8 +253,11 @@ function render_heatmap(){
 
             const sel = d3.brushSelection(this);
 
-            var upper_bound = 100+2 - sel[0] / 6;
-            var lower_bound = 100+2 - sel[1] / 6;
+            var upper_bound = 100 - sel[0] / 6;
+            var lower_bound = 100 - sel[1] / 6;
+            last_lower_bound = lower_bound;
+            last_upper_bound = upper_bound;
+
             
             // displays values on brush
             var upper = d3.select("#upperbound-txt")
