@@ -253,8 +253,8 @@ function render_heatmap(){
 
             const sel = d3.brushSelection(this);
 
-            var upper_bound = 100 - sel[0] / 6;
-            var lower_bound = 100 - sel[1] / 6;
+            var upper_bound = 100+2 - sel[0] / 6;
+            var lower_bound = 100+2 - sel[1] / 6;
             last_lower_bound = lower_bound;
             last_upper_bound = upper_bound;
 
