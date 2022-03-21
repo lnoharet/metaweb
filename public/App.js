@@ -34,7 +34,7 @@ socket.on("get_users_response", function (arg) {
       return player.toLowerCase().includes(searchString);
     });
 
-    const filtered_users = users.filter(user => { return user.name.toLowerCase().includes(searchString) })
+    const filtered_users = users.filter((list => list.uuid !== current_user)).filter(user => { return user.name.toLowerCase().includes(searchString) });
     //console.log(filtered_users);
 
     if (filtered_users.length == 0 && searchString == "") {
@@ -80,7 +80,7 @@ function displayFriendsList(users) {
           var last_player = document.getElementById(window.current_user);
           last_player.className = "player-container";
         }
-        
+
         window.current_user = this.id;
         window.current_player_name = this.firstChild.innerHTML;
         console.log("new player", this.firstChild.innerHTML);
@@ -88,7 +88,7 @@ function displayFriendsList(users) {
         dropdownPlayer();
 
         // TODO: Query current stat for current user. and render heatmap
-        if(window.current_stat != null){
+        if (window.current_stat != null) {
           socket.emit("get_stat", {
             user: window.current_user,
             stat: window.current_stat,
@@ -104,8 +104,8 @@ function displayFriendsList(users) {
         window.current_user = null;
         window.current_player_name = null;
         dropdownServer();
-        
-        if(window.current_stat != null){
+
+        if (window.current_stat != null) {
           socket.emit("get_stat", {
             user: window.current_user,
             stat: window.current_stat,
@@ -130,9 +130,9 @@ socket.on("get_stat_response", function (arg) {
   var data = arg.result;
   var days = document.getElementById("daysRange").value;
   document.getElementById("slidecontainer").removeAttribute("hidden");
-  if(window.current_user == null){
+  if (window.current_user == null) {
     // server stats 
-    switch(stat){
+    switch (stat) {
       case "1":
         // Total mob kills
         renderChart(group_into_dates(data, days, "mob_kills"), "Mobs killed", dateStamps(days));
@@ -151,7 +151,7 @@ socket.on("get_stat_response", function (arg) {
         break;
     }
   }
-  else{
+  else {
     switch (stat) {
       case "1":
         // Mob Kills
@@ -183,7 +183,7 @@ socket.on("get_stat_response", function (arg) {
 
 
       default:
-          break;
+        break;
     }
   }
 });
@@ -202,7 +202,7 @@ function selectChange(stat_selection) {
   }
 }
 
-function dropdownServer(){
+function dropdownServer() {
   document.getElementsByName("stats")[0].options[1].textContent = "Total Mob Kills";
   document.getElementsByName("stats")[0].options[2].textContent = "Total Player Kills";
   document.getElementsByName("stats")[0].options[3].textContent = "Total Deaths";
@@ -211,7 +211,7 @@ function dropdownServer(){
   document.getElementById("final").setAttribute("hidden", "hidden");
 }
 
-function dropdownPlayer(){
+function dropdownPlayer() {
   document.getElementsByName("stats")[0].options[1].textContent = "Mob Kills";
   document.getElementsByName("stats")[0].options[2].textContent = "Player Kills";
   document.getElementsByName("stats")[0].options[3].textContent = "Deaths";
