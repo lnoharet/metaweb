@@ -122,6 +122,13 @@ function render_heatmap(){
             .style("opacity", square_opacity)
         }
 
+        let transform;
+
+        const zoom = d3.zoom().on("zoom", e => {
+          svg.attr("transform", (transform = e.transform));
+        });
+    
+
         // add the squares
         svg.selectAll()
             .data(data, function(d) {return d.coords[0]+':'+d.coords[1];})
@@ -138,6 +145,7 @@ function render_heatmap(){
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
+            .call(zoom)
         
             
             //scale on the side
