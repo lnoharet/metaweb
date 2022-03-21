@@ -103,6 +103,7 @@ function displayUserList(usrs) {
         console.log("new player", this.firstChild.innerHTML);
         this.className = "player-container-selected";
         dropdownPlayer();
+        document.getElementById("stats-img").src = "resources/skull.png";
 
         if(window.current_stat != null){
           socket.emit("get_stat", {
@@ -124,6 +125,7 @@ function displayUserList(usrs) {
           });
         }
         chartText.textContent = "Server Stats";
+        document.getElementById("stats-img").src = "resources/world.png";
         dropdownServer();
       }
       render_heatmap();
