@@ -134,7 +134,7 @@ function render_heatmap(){
         svg.append("image")
             .attr("width",  width)
             .attr("height", height)
-            .attr("xlink:href", "./resources/map.png");
+            .attr("xlink:href", "./resources/map2.png");
 
         // add the squares
         svg.selectAll()
