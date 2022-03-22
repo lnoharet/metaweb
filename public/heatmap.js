@@ -23,10 +23,12 @@ function render_heatmap(){
     let transform;
 
     const zoom = d3.zoom()
-        .translateExtent([[-500, -300],[1350, 900]])
-        .on("zoom", e => {
-            svg.attr("transform", (transform = e.transform));
-        });
+    .translateExtent([[-450, -300],[1350, 900]])
+    .scaleExtent([1, 10])
+    
+    .on("zoom", e => {
+      svg.attr("transform", (transform = e.transform));
+    });
     
 
     // append the svg object to the body of the page
