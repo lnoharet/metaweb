@@ -13,7 +13,6 @@ window.users; // list of all users
 var sessions;
 window.users_with_last_seen = [];
 
-
 render_heatmap();
 
 // sorts the user list on the last seen online
@@ -44,6 +43,7 @@ function create_userlist(){
     const filteredPlayers = players.filter(player => {
       return player.toLowerCase().includes(searchString);
     });
+
     const filtered_users = users_with_last_seen.filter((list => list.uuid !== current_user)).filter(user => { return user.name.toLowerCase().includes(searchString) });
 
     if (filtered_users.length == 0 && searchString == "") {
@@ -97,7 +97,7 @@ function displayUserList(usrs) {
           var last_player = document.getElementById(window.current_user);
           last_player.className = "player-container";
         }
-        
+
         window.current_user = this.id;
         window.current_player_name = this.firstChild.innerHTML;
         console.log("new player", this.firstChild.innerHTML);
@@ -105,7 +105,8 @@ function displayUserList(usrs) {
         dropdownPlayer();
         document.getElementById("stats-img").src = "resources/skull.png";
 
-        if(window.current_stat != null){
+        if (window.current_stat != null) {
+
           socket.emit("get_stat", {
             user: window.current_user,
             stat: window.current_stat,
@@ -117,15 +118,15 @@ function displayUserList(usrs) {
         window.current_user = null;
         window.current_player_name = null;
         dropdownServer();
-        
-        if(window.current_stat != null){
+
+        if (window.current_stat != null) {
           socket.emit("get_stat", {
             user: window.current_user,
             stat: window.current_stat,
           });
         }
         chartText.textContent = "Server Stats";
-        document.getElementById("stats-img").src = "resources/world.png";
+        document.getElementById("stats-img").src = "resources/zombie.png";
         dropdownServer();
       }
       render_heatmap();
@@ -139,9 +140,9 @@ socket.on("get_stat_response", function (arg) {
   var data = arg.result;
   //var days = document.getElementById("daysRange").value;
   document.getElementById("slidecontainer").removeAttribute("hidden");
-  if(window.current_user == null){
+  if (window.current_user == null) {
     // server stats 
-    switch(stat){
+    switch (stat) {
       case "1":
         // Total mob kills
         renderChart(group_into_dates(data, days, "mob_kills"), "Total mobs killed", dateStamps(days));
@@ -160,7 +161,7 @@ socket.on("get_stat_response", function (arg) {
         break;
     }
   }
-  else{
+  else {
     switch (stat) {
       case "1":
         // Mob Kills
@@ -183,7 +184,7 @@ socket.on("get_stat_response", function (arg) {
         renderChart(sessionsPlayed(data, days), "Amount of sessions", dateStamps(days));
         break;
       default:
-          break;
+        break;
     }
   }
 });
@@ -200,6 +201,7 @@ function selectChange(stat_selection) {
     });
   }
 }
+
 
 function sliderChange(new_days){
     document.getElementById('chosen-day-range').innerHTML = new_days + ' days';
@@ -221,7 +223,7 @@ function dropdownServer(){
   document.getElementById("final").setAttribute("hidden", "hidden");
 }
 
-function dropdownPlayer(){
+function dropdownPlayer() {
   document.getElementsByName("stats")[0].options[1].textContent = "Mob Kills";
   document.getElementsByName("stats")[0].options[2].textContent = "Player Kills";
   document.getElementsByName("stats")[0].options[3].textContent = "Deaths";

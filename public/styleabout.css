@@ -111,8 +111,10 @@ p {
     border-radius: 100%;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, .3);
 }
+
 .reference-container {
-    height: 15vw;
+    margin-top: 10px;
+    height: 200px;
     width: 100%;
     display:flex;
     justify-content: space-between;
@@ -127,8 +129,8 @@ p {
     font-size: 0.5em;
 }
 .git-button {
-    height: 3vw;
-    width: 3vw;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
 
     margin-left: 1.5rem;
