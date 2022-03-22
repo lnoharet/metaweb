@@ -22,8 +22,10 @@ function render_heatmap(){
 
     let transform;
 
-    const zoom = d3.zoom().on("zoom", e => {
-          svg.attr("transform", (transform = e.transform));
+    const zoom = d3.zoom()
+        .translateExtent([[-500, -300],[1350, 900]])
+        .on("zoom", e => {
+            svg.attr("transform", (transform = e.transform));
         });
     
 
