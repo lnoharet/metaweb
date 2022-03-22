@@ -22,6 +22,7 @@ function render_heatmap(){
 
     let transform;
 
+
     const zoom = d3.zoom()
     .translateExtent([[-450, -300],[1350, 900]])
     .scaleExtent([1, 10])
@@ -147,7 +148,7 @@ function render_heatmap(){
             .attr("y", function(d) { return y(d.coords[1]) })
             .attr("width", x.bandwidth() )
             .attr("height", y.bandwidth() )
-            .style("fill", function(d) { return eval_heatmap_value(d.value, 0) })//return eval_heatmap_value(d.value, d.date, d.names)} )
+            .style("fill", function(d) { return eval_heatmap_value(d.value) })//return eval_heatmap_value(d.value, d.date, d.names)} )
             .style("stroke-width", 4)
             .style("stroke", "none")
             .style("opacity", square_opacity)
@@ -155,22 +156,18 @@ function render_heatmap(){
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
             
-        
-        
-        function eval_heatmap_value(val, date){
+        function eval_heatmap_value(val){
             var sum = summa(val); 
             if(myColor(sum) ==  "#000001"){
                 return "rgba(0,0,0,0)";
             }
-            if (date+1 <= window.days){
-                if(sum <= last_upper_bound && sum > last_lower_bound){
-                    return myColor(sum);
-                }
-                else{ return "rgba(0,0,0,0)";}
-            }        
-            return "rgba(0,0,0,0)";
+            if(sum <= last_upper_bound && sum > last_lower_bound){
+                return myColor(sum);
+            }
+            else{ return "rgba(0,0,0,0)";}
         }
-            //scale on the side
+
+        //colorscale on the side
         function drawScale(id, interpolator) {
             
                 var data = Array.from(Array(100).keys());
@@ -244,15 +241,18 @@ function render_heatmap(){
                 .style('fill', 'white')
                 .style('textAlign', "center")
                 ;
-            
-                svg.call(
+
+                svg.append('g')
+                .attr('class', 'brush')
+                .call(
                     d3.brushY()                   
-                    .extent( [ [0,10], [20,height+10] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+                    .extent( [ [0,10], [20,height+10] ] )       // initialises the brush area: start at (0,0) and finishes at (width,height)
                     .on("brush", updateChartBrush) 
                 )
         }
         drawScale("seq1", d3.interpolate(d3.interpolateInferno));
 
+        // updates the heatmap based on the brush filtering
         function updateChartBrush(){
 
             const sel = d3.brushSelection(this);
@@ -262,7 +262,6 @@ function render_heatmap(){
             last_lower_bound = lower_bound;
             last_upper_bound = upper_bound;
 
-            
             // displays values on brush
             var upper = d3.select("#upperbound-txt")
             upper.text(Math.round(upper_bound))
