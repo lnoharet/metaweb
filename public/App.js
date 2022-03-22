@@ -232,6 +232,9 @@ function dropdownPlayer() {
 }
 
 function reset_heatmap(){
+  //d3.select("#heatmap").attr("transform", d3.zoomIdentity);
+  // BUGGY !!
+  // TODO
   render_heatmap();
 }
 
@@ -241,8 +244,6 @@ function reset_heatmap_filter(){
   console.log("reset filter")
   d3.select("#lowerbound-txt").text("");
   d3.select("#upperbound-txt").text("");
-  d3.selectAll(".brush").call(d3.brush().clear);//call(d3.brush().clear);
+  d3.selectAll(".brush").call(d3.brush().clear);
   render_heatmap();
-
-
 }
