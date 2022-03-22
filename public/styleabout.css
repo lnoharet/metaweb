@@ -96,10 +96,24 @@ p {
 
 .p-profile {
     font-size: 0.9rem;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
     color: #B2085C;
 }
 
+.demo-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    color: white;
+    text-decoration: none;
+    position: absolute;
+    right: 200px;
+  }
+  
+  .demo-btn:hover {
+    color: #B2085C;
+    transform: translateY(-2px);
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  }
 .img-about {
     height: 15vw;
     width: 15vw;

@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap" rel="stylesheet">
     <title>METAweb</title>
@@ -23,7 +27,7 @@
 
         <div class="navbar">
             <div class="headline"><a href="index.html">METAcraft server</a></div>
-            <!-- <a href="about.html" class="demo-btn">Demo</a> -->
+            <a href="demo.html" class="demo-btn">Demo</a>
             <a href="about.html" class="home-btn">About us</a>
         </div>
 
@@ -34,7 +38,7 @@
                     <div class="hr-sidebar"></div>
 
                     <div class="head-group">
-                        <img class="img-head" src="resources/head.png"></img>
+                        <div class="animate__animated animate__headShake"><img class="img-head" src="resources/head.png"></img></div>
                         <h2 class="h2-players">Players</h2>
                         <div id="searchWrapper">
                             <input class="searchBar" type="text" name="searchBar" id="searchBar"
@@ -50,7 +54,7 @@
 
 
                     <div class="head-group-skull">
-                        <img id="stats-img" class="img-head" src="resources/zombie.png"></img>
+                        <div class="animate__animated animate__headShake"><img id="stats-img" class="img-head" src="resources/zombie.png"></img></div>
                         <h2 class="h2-chartText" id="adaptiveText">Server Stats</h2>
                     </div>
 
@@ -83,7 +87,7 @@
 
         <div class="btns-group">
           <button class="btn-heatmap" onclick="reset_heatmap()">Reset zoom</button>
-          <button class="btn-heatmap" onclick="reset_heatmap_filter()">Reset brush</button></div>
+          <button class="btn-heatmap" onclick="reset_heatmap_filter()">Reset filter</button></div>
         
     </div>
     <script src="App.js"> </script>

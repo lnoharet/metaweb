@@ -58,7 +58,7 @@ body {
   color: white;
   text-decoration: none;
   position: absolute;
-  right: 150px;
+  right: 200px;
 }
 
 .home-btn:hover {
@@ -367,8 +367,8 @@ select {
   flex-direction: column;
   z-index: 5;
   position: absolute;
-  right: 5%;
-  bottom: 5%;
+  right: 6%;
+  bottom: 3%;
 }
 
 .btn-heatmap {
