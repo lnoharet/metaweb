@@ -244,4 +244,5 @@ function reset_heatmap_filter(){
   d3.selectAll(".brush").call(d3.brush().clear);//call(d3.brush().clear);
   render_heatmap();
 
+
 }

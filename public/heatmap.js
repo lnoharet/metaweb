@@ -22,9 +22,14 @@ function render_heatmap(){
 
     let transform;
 
-    const zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", e => {
-          svg.attr("transform", (transform = e.transform));
-        });
+
+    const zoom = d3.zoom()
+    .translateExtent([[-450, -300],[1350, 900]])
+    .scaleExtent([1, 10])
+    
+    .on("zoom", e => {
+      svg.attr("transform", (transform = e.transform));
+    });
     
 
     // append the svg object to the body of the page
@@ -117,7 +122,7 @@ function render_heatmap(){
         }
         const mousemove = function(event,d) {
             tooltip
-            .html("Location <br>"+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>These players have visited lately: "+ d.names.join(', '))
+            .html("Location "+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>Times visited last seven days: "+ summa(d.value)+"<br>Players: "+ d.names.join(', '))
 
             .style("position", "fixed")
         }
@@ -132,7 +137,7 @@ function render_heatmap(){
         svg.append("image")
             .attr("width",  width)
             .attr("height", height)
-            .attr("xlink:href", "./resources/map.png");
+            .attr("xlink:href", "./resources/map2.png");
 
         // add the squares
         svg.selectAll()
@@ -173,11 +178,11 @@ function render_heatmap(){
             
                 var yScale = d3.scaleLinear()
                     .domain([100,0])
-                    .range([-5,height-9]);
+                    .range([5,height+2]);
                 
                 var yAxScale = d3.scaleLinear()
                     .domain([100,0])
-                    .range([0,height-15]);
+                    .range([0-2,height-3]);
             
                 var u = d3.select("#" + id)
                     .selectAll("rect")
@@ -252,8 +257,8 @@ function render_heatmap(){
 
             const sel = d3.brushSelection(this);
 
-            var upper_bound = 100 - sel[0] / 6;
-            var lower_bound = 100 - sel[1] / 6;
+            var upper_bound = 100+2 - sel[0] / 6;
+            var lower_bound = 100+2 - sel[1] / 6;
             last_lower_bound = lower_bound;
             last_upper_bound = upper_bound;
 

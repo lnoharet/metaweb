@@ -82,11 +82,11 @@ function renderChart(data, label, date) {
 
   svg.append("text")             
   .attr("transform",
-        "translate(" + (w) + " ," + 
-                       (h + 40) + ")")
+        "translate(" + (w - 15) + " ," + 
+                       (h + 45) + ")")
   .style("text-anchor", "middle")
   .text("Date")
-  .style("padding", "10px")
+  .style("padding", "0px")
   .style("fill", "#fff")
   .style("font-family", 'Montserrat')
   .style("font-size", '14px');
