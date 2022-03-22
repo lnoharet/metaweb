@@ -31,6 +31,10 @@ function render_heatmap(){
       svg.attr("transform", (transform = e.transform));
     });
     
+    d3.select("button").on("click", function() {
+        svg.call(zoom.transform, d3.zoomIdentity);
+    })
+    
 
     // append the svg object to the body of the page
     const svg = d3.select("#heatmap")
