@@ -121,7 +121,7 @@ function render_heatmap(){
         }
         const mousemove = function(event,d) {
             tooltip
-            .html("Location <br>"+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>These players have visited lately: "+ d.names.join(', '))
+            .html("Location "+"x: " +d.coords[0]*16+" y: "+d.coords[1]*16+ "<br>Times visited last seven days: "+ summa(d.value)+"<br>Players: "+ d.names.join(', '))
 
             .style("position", "fixed")
         }
