@@ -230,3 +230,7 @@ function dropdownPlayer() {
   document.getElementsByName("stats")[0].options[4].textContent = "Total Time Played";
   document.getElementById("final").removeAttribute("hidden");
 }
+
+function reset_heatmap(){
+  render_heatmap()
+}
