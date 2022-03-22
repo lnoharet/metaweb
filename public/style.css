@@ -354,3 +354,28 @@ select {
 #chosen-day-range{
   font-family: 'Montserrat', sans-serif;
 }
+
+.btns-group {
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+}
+
+.btn-heatmap {
+  border: none;
+  background-color:#B2085C;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  margin: 5px;
+  padding: 3px 10px 3px 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  
+}
+
+.btn-heatmap:hover {
+  transform: translateY(-2px);
+}
