@@ -49,28 +49,31 @@ body {
     width: 100vw;
     flex-direction: column;
     align-items: left;
+
 }
 
 .text-boxes {
     display: flex;
     flex-direction: row;
+    
 }
 
 .text-container {
     margin-left: 2rem;
-    margin-top: 3rem;
+    margin-top: 0rem;
     margin-right: 2rem;
     width: 40%;
 }
 
 p {
-    font-size: 1rem;
+    font-size: 0.5rem;
 }
 
 .container-profiles {
+    
     display: flex;
     position: absolute;
-    bottom: 2.5rem;
+    bottom: 8rem;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
@@ -113,26 +116,27 @@ p {
     margin-top: 10px;
     height: 200px;
     width: 100%;
+    display:flex;
+    justify-content: space-between;
+}
+
+.h2-references {
+    margin-top:18rem;
+    font-size: 1.0em;
 
 }
-.h2-references {
-    font-size:12px;
-}
 .references {
-    font-size:10px;
+    font-size: 0.5em;
 }
 .git-button {
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    float:right;
-    margin-right: 1%;
+
+    margin-left: 1.5rem;
     display:flex;
     align-items: stretch;
 }
 .git-button:hover {
     cursor:pointer;
-}
-.button-wrapper {
-    text-align:right;
 }
