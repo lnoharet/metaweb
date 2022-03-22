@@ -204,7 +204,7 @@ function selectChange(stat_selection) {
 
 
 function sliderChange(new_days){
-    document.getElementById('chosen-day-range').innerHTML = new_days + ' days';
+    document.getElementById('chosen-day-range').innerHTML = 'Last ' + new_days + ' days';
     window.days = new_days;    
     if (window.current_stat != null) {
       socket.emit("get_stat", {
@@ -229,4 +229,19 @@ function dropdownPlayer() {
   document.getElementsByName("stats")[0].options[3].textContent = "Deaths";
   document.getElementsByName("stats")[0].options[4].textContent = "Total Time Played";
   document.getElementById("final").removeAttribute("hidden");
+}
+
+function reset_heatmap(){
+  render_heatmap();
+}
+
+function reset_heatmap_filter(){
+  last_lower_bound = 0;
+  last_upper_bound = 100;
+  console.log("reset filter")
+  d3.select("#lowerbound-txt").text("");
+  d3.select("#upperbound-txt").text("");
+  d3.selectAll(".brush").call(d3.brush().clear);//call(d3.brush().clear);
+  render_heatmap();
+
 }

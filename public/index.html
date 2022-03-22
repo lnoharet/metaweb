@@ -72,7 +72,7 @@
                     <div class="slidecontainer" id="slidecontainer" hidden>
                         <input type="range" min="0" max="30" value="7" class="slider" id="daysRange"
                             onChange=sliderChange(this.value) />
-                        <label id="chosen-day-range">7 days</label>
+                        <label id="chosen-day-range">Last 7 days</label>
                     </div>
                 </div>
             </ul>
@@ -81,6 +81,9 @@
             </svg>
             
         </div>
+        <div class="btns-group">
+            <button class="btn-heatmap" onclick="reset_heatmap()">Reset map</button>
+            <button class="btn-heatmap" onclick="reset_heatmap_filter()">Reset brush</button></div>
 
 
     </div>

@@ -17,6 +17,15 @@ body {
   /* //overflow: scroll; */
 }
 
+.btns-group {
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+}
+
 
 .flex-view {
   display: flex;
