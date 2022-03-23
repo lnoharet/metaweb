@@ -110,8 +110,15 @@ function unix_to_days_or_hours(unix_timestamp){
     var today = Date.now();
     var days = Math.floor((today - unix_timestamp)/ (1000*60*60*24));
     if (days == 0){
-        // return hours 
-        return "online ".concat(Math.floor((today - unix_timestamp)/ (1000*60*60)).toString().concat("h ago"));
+        // return hours
+        var hours =  Math.floor((today - unix_timestamp)/ (1000*60*60));
+        if(hours != 0){
+            return "online ".concat(hours.toString().concat("h ago"));
+        }
+        else{
+            var minutes = Math.floor((today - unix_timestamp)/ (1000*60));
+            return "online ".concat(minutes.toString().concat("min ago"));
+        }
     }
     else{
         return "online ".concat(days.toString().concat("d ago"));
