@@ -20,7 +20,6 @@ function group_into_dates(data, days, stat_type) {
         var index = Math.floor((today - session)/ (1000*60*60*24));
         stats[days-1-index] += filtered[i][stat_type];
     }
-    console.log("stats: " + stats);
     return stats;
 }
 
@@ -54,7 +53,6 @@ function dateStamps(days){  // date stamps for x-axis on chart
 
 function timePlayed(data, days) {
     var filtered = filter_data_by_days(data, days);
-    console.log(filtered);
     var today = Date.now();
     var stats = [];
     for (let i = 0; i < days; i++) {
@@ -65,10 +63,8 @@ function timePlayed(data, days) {
         var index = Math.floor((today - session)/ (1000*60*60*24));
         var hoursPlayed = (filtered[i].session_end - filtered[i].session_start)/3600000;
         stats[days-1-index] += hoursPlayed;
-        console.log("index: " + index); 
     }
    
-    console.log(stats);
     return stats;
 }
 

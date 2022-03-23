@@ -100,7 +100,6 @@ function displayUserList(usrs) {
 
         window.current_user = this.id;
         window.current_player_name = this.firstChild.innerHTML;
-        console.log("new player", this.firstChild.innerHTML);
         this.className = "player-container-selected";
         dropdownPlayer();
         document.getElementById("stats-img").src = "resources/skull.png";
@@ -135,7 +134,6 @@ function displayUserList(usrs) {
 }
 
 socket.on("get_stat_response", function (arg) {
-  console.log(arg.result);
   var stat = arg.stat;
   var data = arg.result;
   //var days = document.getElementById("daysRange").value;
@@ -239,7 +237,6 @@ function reset_heatmap(){
 function reset_heatmap_filter(){
   last_lower_bound = 0;
   last_upper_bound = 100;
-  console.log("reset filter")
   d3.select("#lowerbound-txt").text("");
   d3.select("#upperbound-txt").text("");
   d3.selectAll(".brush").call(d3.brush().clear);

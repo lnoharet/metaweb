@@ -13,7 +13,6 @@ function summa(arr){
 function render_heatmap(){
 
     d3.select("#heatmap-svg").remove();
-    console.log("rendering heatmap");
 
     width = 900;
     height = 600;
