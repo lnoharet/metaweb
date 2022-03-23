@@ -3,9 +3,9 @@ function renderChart(data, label, date) {
 
   d3.select("#chart").remove();
   const isAllZero = data.every(item => item === 0);
-  const isAllLow = data.every(item => item < 10);
+  const isAllLow = data.every(item => item < 4);
   isAllZero ? data_max = 10 : data_max = Math.max(...data);
-  isAllLow ? data_max = 10 : data_max = Math.max(...data);
+  isAllLow ? data_max = 4 : data_max = Math.max(...data);
 
   function circle_pattern(x_value, y_value, r_value) {
     isAllZero ?  svg.append('circle')

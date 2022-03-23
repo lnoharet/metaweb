@@ -14,26 +14,25 @@ function render_heatmap(){
 
     d3.select("#heatmap-svg").remove();
     console.log("rendering heatmap");
-    // set the dimensions and margins of the graph
 
-    //var margin =  {top: 0, right: 0, bottom: 0, left: 0},
     width = 900;
     height = 600;
 
-    let transform;
+    var transform;
 
 
     const zoom = d3.zoom()
     .translateExtent([[-450, -300],[1350, 900]])
-    .scaleExtent([1, 10])
+    .scaleExtent([0.95, 10])
     
     .on("zoom", e => {
       svg.attr("transform", (transform = e.transform));
     });
     
-    d3.select("button").on("click", function() {
-        svg.call(zoom.transform, d3.zoomIdentity);
-    })
+/*     d3.select("button").on("click", function() {
+        svg.attr("transform",  d3.zoomIdentity);
+        //svg.call(zoom.transform, d3.zoomIdentity);
+    }) */
     
 
     // append the svg object to the body of the page
@@ -45,11 +44,9 @@ function render_heatmap(){
     .call(zoom)
     //.style("background-image", "url(./resources/map.png)")
     .append("g")
-    //.attr("transform", `translate(${margin.left}, ${margin.top})`)
 
     //Read the data
-    //d3.csv("https://raw.githubusercontent.com/glas444/data/main/heatmap_data3.csv").then(function(data) {
-    //d3.json("https://raw.githubusercontent.com/glas444/data/main/countries.csv").then(function(data) {
+
     d3.json("https://raw.githubusercontent.com/glas444/data/main/data.json").then(function(data) { 
 
         if (window.current_player_name != null){
@@ -246,7 +243,7 @@ function render_heatmap(){
                 .style('textAlign', "center")
                 ;
 
-                svg.append('g')
+                svg
                 .attr('class', 'brush')
                 .call(
                     d3.brushY()                   

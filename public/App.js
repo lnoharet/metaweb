@@ -232,10 +232,8 @@ function dropdownPlayer() {
 }
 
 function reset_heatmap(){
-  //d3.select("#heatmap").attr("transform", d3.zoomIdentity);
-  // BUGGY !!
-  // TODO
   render_heatmap();
+
 }
 
 function reset_heatmap_filter(){
