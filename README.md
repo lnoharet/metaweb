@@ -7,7 +7,7 @@ METAweb can therefore be used to find interesting player stats about yourself an
 The project is deployed at https://metawebb.herokuapp.com/ and works best when run on Google Chrome.
 
 ## Data  
-Due to the lack of plug-in for positional data collection on minecraft fabric servers, the data for the heatmap was generated for this project. It was then stored on https://raw.githubusercontent.com/glas444/data/main/data.json. 
+Due to the lack of plug-ins for positional data collection on minecraft fabric servers, the data for the heatmap was randomly generated for the sake this project. This data was then stored on https://raw.githubusercontent.com/glas444/data/main/data.json in json format.
 For the player and server statistics, the plug-in Player Analytics stored the data in an SQL database hosted on metacrafts hosting service Bloom Host. The database schema and more documentation on the plug-in can be found here https://github.com/plan-player-analytics/Plan/wiki/Database-Schema. 
 
 
